@@ -30,7 +30,7 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
     return Column(
       children: List.generate(items.length, (index) {
         return CheckboxListTile(
-          title: Text('Option ${index + 1}'),
+          title: Text(items[index]),
           value: _selectedIndex == index,
           onChanged: (value) => _onCheckboxChanged(index, value),
         );
