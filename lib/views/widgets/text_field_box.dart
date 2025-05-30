@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rail_ticketing/core/color_pallet.dart';
 
-class TextFieldBox extends StatelessWidget {
-  const TextFieldBox({super.key, required this.child});
+class CustomTextFieldBox extends StatelessWidget {
+  const CustomTextFieldBox({super.key, required this.child});
 
   final Widget child;
 

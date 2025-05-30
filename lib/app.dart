@@ -37,5 +37,13 @@ class RailTicket extends StatelessWidget {
         color: Colors.white,
       ),
     ),
+
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ColorPallet.gradientColor2,
+        fixedSize: Size(double.maxFinite, 50),
+        iconSize: 30,
+      ),
+    ),
   );
 }
