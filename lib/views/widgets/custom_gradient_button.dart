@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+
 import 'package:rail_ticketing/core/color_pallet.dart';
 
-class CustomGradientButton extends StatelessWidget {
+class CustomGradientButton extends StatefulWidget {
   const CustomGradientButton({
     super.key,
     required this.buttonName,
@@ -16,22 +18,46 @@ class CustomGradientButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   @override
+  State<CustomGradientButton> createState() => _CustomGradientButtonState();
+}
+
+class _CustomGradientButtonState extends State<CustomGradientButton> {
+  bool isTapped = false;
+
+  void onTapInkWell() {
+    setState(() {
+      isTapped = true;
+    });
+    Timer(Duration(milliseconds: 200), () {
+      setState(() {
+        isTapped = false;
+      });
+    });
+    widget.onPressed();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onPressed,
-      child: Container(
-        height: buttonHeight,
-        width: buttonWidth,
+      borderRadius: BorderRadius.circular(32),
+      onTap: onTapInkWell,
+      child: AnimatedContainer(
+        duration: Duration(microseconds: 200),
+        height: widget.buttonHeight,
+        width: widget.buttonWidth,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [ColorPallet.gradientColor1, ColorPallet.gradientColor2],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: isTapped ? Alignment.bottomCenter : Alignment.topCenter,
+            end: isTapped ? Alignment.topCenter : Alignment.bottomCenter,
           ),
           borderRadius: BorderRadius.circular(32),
         ),
         alignment: Alignment.center,
-        child: Text(buttonName, style: TextStyle(fontWeight: FontWeight.bold)),
+        child: Text(
+          widget.buttonName,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
