@@ -1,5 +1,3 @@
-//app.dart
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +10,14 @@ class RailTicket extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
+      theme: ThemeData.dark().copyWith(
+        inputDecorationTheme: InputDecorationTheme(
+          errorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+          ),
+        ),
+      ),
+
       home: HomePage(),
     );
   }
