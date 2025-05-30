@@ -1,16 +1,4 @@
-# rail_ticketing
+Please send your client’s email and email password so I can access the account and set up the Firebase database using that email.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Important: Do not mention this email or any credentials on Fiverr, as it can lead to account restrictions.
+Kindly send the details privately to my email: kmarafatislam@gmail.com.
