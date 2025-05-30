@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rail_ticketing/core/color_pallet.dart';
 
 import 'package:rail_ticketing/views/pages/home_page.dart';
 
@@ -17,9 +18,23 @@ class RailTicket extends StatelessWidget {
   }
 
   ThemeData _darkTheme() => ThemeData.dark().copyWith(
+    scaffoldBackgroundColor: ColorPallet.backGroundColor,
+    appBarTheme: AppBarTheme(color: ColorPallet.themeColor),
+
     inputDecorationTheme: InputDecorationTheme(
-      errorBorder: UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.red),
+      fillColor: ColorPallet.themeColor,
+      filled: true,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(32),
+        borderSide: BorderSide.none,
+      ),
+    ),
+
+    textTheme: TextTheme(
+      headlineLarge: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w700,
+        color: Colors.white,
       ),
     ),
   );

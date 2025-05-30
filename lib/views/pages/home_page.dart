@@ -55,6 +55,13 @@ class HomePage extends StatelessWidget {
                     return null;
                   }
                 },
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                  errorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  filled: false,
+                ),
               ),
               actions: [
                 Center(
