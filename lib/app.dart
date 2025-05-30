@@ -45,5 +45,11 @@ class RailTicket extends StatelessWidget {
         iconSize: 30,
       ),
     ),
+    tabBarTheme: TabBarTheme(
+      indicatorColor: ColorPallet.gradientColor2,
+      labelColor: Colors.yellow,
+      dividerColor: Colors.transparent,
+      labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    ),
   );
 }

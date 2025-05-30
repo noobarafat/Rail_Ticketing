@@ -25,12 +25,28 @@ class _FormInputPageState extends State<FormInputPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.formName),
+        title: Text(
+          widget.formName,
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
         automaticallyImplyLeading: false,
-
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.remove_red_eye, size: 32, color: Colors.white),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.save, size: 32, color: Colors.white),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.key, size: 32, color: Colors.white),
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
-          tabs: [Tab(child: Text("Website")), Tab(child: Text("Rail Connect"))],
+          tabs: [Tab(child: Text("WEBSITE")), Tab(child: Text("RAIL CONNECT"))],
         ),
       ),
 
