@@ -10,15 +10,17 @@ class RailTicket extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
-        inputDecorationTheme: InputDecorationTheme(
-          errorBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.red),
-          ),
-        ),
-      ),
+      theme: _darkTheme(),
 
       home: HomePage(),
     );
   }
+
+  ThemeData _darkTheme() => ThemeData.dark().copyWith(
+    inputDecorationTheme: InputDecorationTheme(
+      errorBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.red),
+      ),
+    ),
+  );
 }
