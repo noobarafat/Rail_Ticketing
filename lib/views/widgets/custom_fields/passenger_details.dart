@@ -63,7 +63,7 @@ class PassengerDetails extends StatelessWidget {
                       onPressed: () {
                         passengerViewmodel.removeUser(index);
                       },
-                      icon: Icon(Icons.delete),
+                      icon: Icon(Icons.clear),
                     ),
                     CustomTextFieldBox(
                       child: Column(

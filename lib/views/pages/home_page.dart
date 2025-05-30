@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rail_ticketing/core/color_pallet.dart';
 
 import 'package:rail_ticketing/views/pages/form_input_page.dart';
 import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
+import 'package:rail_ticketing/views/widgets/gradient_container.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -16,14 +19,50 @@ class HomePage extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: Center(
-        child: CustomGradientButton(
-          buttonName: "New Form",
-          buttonHeight: screenHeight * .05,
-          buttonWidth: screenWidth * .4,
-          onPressed: () {
-            _onPressedNewFormButton(context, screenHeight, screenWidth);
-          },
+      appBar: AppBar(
+        title: Text(
+          "Ticket Booking",
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Icon(CupertinoIcons.square_grid_2x2_fill),
+                const Padding(padding: EdgeInsets.only(right: 12)),
+                Text(
+                  "Forms",
+                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const Padding(padding: EdgeInsets.only(top: 16)),
+            GradientContainer(),
+            const Padding(padding: EdgeInsets.only(top: 20)),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: ColorPallet.themeColor,
+                ),
+                alignment: Alignment.center,
+                child: CustomGradientButton(
+                  buttonName: "New Form",
+                  buttonHeight: screenHeight * .05,
+                  buttonWidth: screenWidth * .4,
+                  onPressed: () {
+                    _onPressedNewFormButton(context, screenHeight, screenWidth);
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
