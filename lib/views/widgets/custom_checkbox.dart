@@ -1,40 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rail_ticketing/core/color_pallet.dart';
+import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
 
-class CustomCheckBox extends StatefulWidget {
-  const CustomCheckBox({super.key});
+class CustomCheckBox extends StatelessWidget {
+  CustomCheckBox({super.key});
 
-  @override
-  State<CustomCheckBox> createState() => _CustomCheckBoxState();
-}
-
-class _CustomCheckBoxState extends State<CustomCheckBox> {
-  List<String> items = [
-    "Automatically Click",
-    "I will Click",
-    "Click Avalilability Button",
-  ];
-  int? _selectedIndex;
-
-  void _onCheckboxChanged(int index, bool? value) {
-    setState(() {
-      if (value == true) {
-        _selectedIndex = index;
-      } else {
-        _selectedIndex = null;
-      }
-    });
-  }
+  final JourneyDetailsViewmodel _detailsViewmodel = Get.put(
+    JourneyDetailsViewmodel(),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(items.length, (index) {
-        return CheckboxListTile(
-          title: Text(items[index]),
-          value: _selectedIndex == index,
-          onChanged: (value) => _onCheckboxChanged(index, value),
+    return GetBuilder<JourneyDetailsViewmodel>(
+      builder: (controller) {
+        return Column(
+          children: List.generate(controller.checkBoxItems.length, (index) {
+            return RadioListTile(
+              activeColor: ColorPallet.gradientColor1,
+              title: Text(
+                controller.checkBoxItems[index],
+                style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              value: index,
+              groupValue: controller.selectedIndexChekcBox,
+              onChanged: (index) {
+                controller.chooseIndex(index);
+              },
+            );
+          }),
         );
-      }),
+      },
     );
   }
 }

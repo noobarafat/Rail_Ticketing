@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
 import 'package:rail_ticketing/views/widgets/custom_checkbox.dart';
 
 class JourneyDetails extends StatelessWidget {
-  const JourneyDetails({super.key});
+  JourneyDetails({super.key});
+
+  final JourneyDetailsViewmodel _journeyDetailsViewmodel = Get.put(
+    JourneyDetailsViewmodel(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +34,9 @@ class JourneyDetails extends StatelessWidget {
           ),
         ),
         _buildTitle("Class"),
-        TextField(
-          decoration: InputDecoration(
-            suffixIcon: Padding(
-              padding: EdgeInsets.only(right: 12),
-              child: Icon(Icons.arrow_drop_down),
-            ),
-          ),
-        ),
+        _buildClassSection(),
         _buildTitle("Quota"),
-        TextField(
-          decoration: InputDecoration(
-            suffixIcon: Padding(
-              padding: EdgeInsets.only(right: 12),
-              child: Icon(Icons.arrow_drop_down),
-            ),
-          ),
-        ),
+        _buildQuotaSection(),
         _buildTitle("Train No"),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,9 +55,57 @@ class JourneyDetails extends StatelessWidget {
     );
   }
 
+  GetBuilder<JourneyDetailsViewmodel> _buildClassSection() {
+    return GetBuilder<JourneyDetailsViewmodel>(
+      builder: (controller) {
+        return TextField(
+          decoration: InputDecoration(
+            suffixIcon: Padding(
+              padding: EdgeInsets.only(right: 12),
+              child: DropdownButtonFormField<String>(
+                value: controller.selectedClass,
+                items:
+                    controller.availableClass
+                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                        .toList(),
+                onChanged: (val) {
+                  controller.chooseClass(val);
+                },
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  GetBuilder<JourneyDetailsViewmodel> _buildQuotaSection() {
+    return GetBuilder<JourneyDetailsViewmodel>(
+      builder: (controller) {
+        return TextField(
+          decoration: InputDecoration(
+            suffixIcon: Padding(
+              padding: EdgeInsets.only(right: 12),
+              child: DropdownButtonFormField<String>(
+                value: controller.selectedQuota,
+                items:
+                    controller.availableQuota
+                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                        .toList(),
+                onChanged: (val) {
+                  controller.chooseQuota(val);
+                },
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Padding _buildTitle(String name) {
     return Padding(
-      padding: const EdgeInsets.only(left: 12, bottom: 8, top: 8),
+      padding: EdgeInsets.only(left: 12, bottom: 8, top: name == "To" ? 0 : 8),
       child: Text(name),
     );
   }

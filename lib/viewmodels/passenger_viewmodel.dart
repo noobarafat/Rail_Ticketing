@@ -22,4 +22,6 @@ class PassengerViewmodel extends GetxController {
     passengers.removeAt(index);
     update();
   }
+
+  
 }
