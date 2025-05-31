@@ -56,7 +56,10 @@ class _CustomGradientButtonState extends State<CustomGradientButton> {
         alignment: Alignment.center,
         child: Text(
           widget.buttonName,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: widget.buttonName == "+" ? 28 : 16,
+          ),
         ),
       ),
     );

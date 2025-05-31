@@ -9,13 +9,13 @@ class LoginField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 12, bottom: 8),
+          padding: const EdgeInsets.only(left: 12, bottom: 4),
           child: Text("User Name"),
         ),
         TextFormField(),
 
         Padding(
-          padding: const EdgeInsets.only(left: 12, bottom: 8, top: 16),
+          padding: const EdgeInsets.only(left: 12, bottom: 4, top: 10),
           child: Text("Password"),
         ),
         TextFormField(),

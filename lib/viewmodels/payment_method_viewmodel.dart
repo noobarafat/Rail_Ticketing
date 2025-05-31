@@ -39,4 +39,57 @@ class PaymentMethodViewmodel extends GetxController {
     }
     update();
   }
+
+  List<String> expiryMonths = [
+    "Month",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+  ];
+  List<String> expiryYears = [
+    "Year",
+    "2025",
+    "2026",
+    "2027",
+    "2028",
+    "2029",
+    "2030",
+    "2031",
+    "2032",
+    "2033",
+    "2034",
+    "2035",
+  ];
+
+  String selectedExpiryMonths = "Month";
+  String selectedExpiryYear = "Year";
+
+  void chooseExpiryMonths(String? month) {
+    if (month != null) {
+      selectedExpiryMonths = month;
+    }
+    update();
+  }
+
+  void chooseExpiryYear(String? year) {
+    if (year != null) {
+      selectedExpiryYear = year;
+    }
+    update();
+  }
+
+  bool autoCaptchaAndPassword = false;
+  void toggle() {
+    autoCaptchaAndPassword = !autoCaptchaAndPassword;
+    update();
+  }
 }

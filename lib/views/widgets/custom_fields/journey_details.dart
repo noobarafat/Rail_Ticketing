@@ -17,10 +17,11 @@ class JourneyDetails extends StatelessWidget {
       children: [
         _buildTitle("From"),
         TextFormField(),
-        Padding(padding: EdgeInsets.only(bottom: 10)),
+        Padding(padding: EdgeInsets.only(bottom: 4)),
         Align(alignment: Alignment.center, child: Icon(Icons.swap_calls)),
         _buildTitle("To"),
         TextField(),
+        Padding(padding: EdgeInsets.only(bottom: 8)),
         _buildTitle("Date"),
         TextField(
           decoration: InputDecoration(
@@ -33,10 +34,13 @@ class JourneyDetails extends StatelessWidget {
             ),
           ),
         ),
+        Padding(padding: EdgeInsets.only(bottom: 8)),
         _buildTitle("Class"),
         _buildClassSection(),
+        Padding(padding: EdgeInsets.only(bottom: 8)),
         _buildTitle("Quota"),
         _buildQuotaSection(),
+        Padding(padding: EdgeInsets.only(bottom: 8)),
         _buildTitle("Train No"),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,8 +52,10 @@ class JourneyDetails extends StatelessWidget {
             IconButton(onPressed: () {}, icon: Icon(Icons.search_rounded)),
           ],
         ),
+        Padding(padding: EdgeInsets.only(bottom: 8)),
         _buildTitle("Boarding Station"),
         TextField(decoration: InputDecoration(hintText: "Optional")),
+        Padding(padding: EdgeInsets.only(bottom: 4)),
         CustomCheckBox(),
       ],
     );
@@ -105,7 +111,7 @@ class JourneyDetails extends StatelessWidget {
 
   Padding _buildTitle(String name) {
     return Padding(
-      padding: EdgeInsets.only(left: 12, bottom: 8, top: name == "To" ? 0 : 8),
+      padding: EdgeInsets.only(left: 12, bottom: 4),
       child: Text(name),
     );
   }

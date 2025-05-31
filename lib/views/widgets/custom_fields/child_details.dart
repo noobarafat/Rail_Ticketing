@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rail_ticketing/core/color_pallet.dart';
 import 'package:rail_ticketing/viewmodels/child_details_viewmodel.dart';
+import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
 import 'package:rail_ticketing/views/widgets/text_field_box.dart';
 
 class ChildDetails extends StatelessWidget {
@@ -50,9 +51,11 @@ class ChildDetails extends StatelessWidget {
                     ],
                   ),
             ),
-            ElevatedButton(
+            CustomGradientButton(
+              buttonName: "+",
+              buttonHeight: 40,
+              buttonWidth: double.maxFinite,
               onPressed: () => _childDetailsViewmodel.addChildPassenger(),
-              child: Icon(Icons.add),
             ),
           ],
         );

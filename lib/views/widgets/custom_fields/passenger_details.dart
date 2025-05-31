@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:rail_ticketing/core/color_pallet.dart';
 import 'package:rail_ticketing/core/country_list.dart';
 import 'package:rail_ticketing/viewmodels/passenger_details_viewmodel.dart';
+import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
 import 'package:rail_ticketing/views/widgets/text_field_box.dart';
 
 class PassengerDetails extends StatelessWidget {
@@ -73,6 +74,7 @@ class PassengerDetails extends StatelessWidget {
                         color: ColorPallet.gradientColor2,
                       ),
                     ),
+
                     CustomTextFieldBox(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,9 +98,11 @@ class PassengerDetails extends StatelessWidget {
                 );
               },
             ),
-            ElevatedButton(
-              onPressed: () => passengerViewmodel.addPassenger(),
-              child: Icon(Icons.add),
+            CustomGradientButton(
+              buttonName: "+",
+              buttonHeight: 40,
+              buttonWidth: double.maxFinite,
+              onPressed: () => controller.addPassenger(),
             ),
           ],
         );
