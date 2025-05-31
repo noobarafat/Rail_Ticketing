@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/child_details.dart';
+import 'package:rail_ticketing/views/widgets/custom_fields/debit_card_field.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/journey_details.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/login_field.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/passenger_details.dart';
@@ -40,6 +41,9 @@ class WebsiteFormPage extends StatelessWidget {
               Padding(padding: EdgeInsets.only(top: 16)),
               _sectionHeader(context, "Payment Method"),
               CustomTextFieldBox(child: PaymentField()),
+              Padding(padding: EdgeInsets.only(top: 16)),
+              _sectionHeader(context, "Debit Card with PIN"),
+              CustomTextFieldBox(child: DebitCardField()),
             ],
           ),
         ),

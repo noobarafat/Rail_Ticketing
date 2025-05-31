@@ -17,4 +17,26 @@ class PaymentMethodViewmodel extends GetxController {
     }
     update();
   }
+
+  List<String> availableCardOptions = [
+    "Visa/Master Card(Powred By HDFC BANK)",
+    "Visa/Master Card(Powred By ICICI BANK)",
+    "American Express",
+  ];
+  String selectedCard = "Visa/Master Card(Powred By HDFC BANK)";
+  void chooseCard(String? card) {
+    if (card != null) {
+      selectedCard = card;
+    }
+    update();
+  }
+
+  List<String> availableCardType = ["Master Card", "VISA", "RuPay"];
+  String selectedCardType = "Master Card";
+  void chooseCardType(String? card) {
+    if (card != null) {
+      selectedCard = card;
+    }
+    update();
+  }
 }
