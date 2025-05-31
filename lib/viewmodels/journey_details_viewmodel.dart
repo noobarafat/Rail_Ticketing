@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
 
 class JourneyDetailsViewmodel extends GetxController {
+  
+
   DateTime? selectedDate;
 
   void updateDate(DateTime? date) {
     selectedDate = date;
-    print(selectedDate);
     update();
   }
 
@@ -58,10 +59,12 @@ class JourneyDetailsViewmodel extends GetxController {
     "I will Click AVAILABILITY button manually",
     "Click AVAILABILITY button as soon as the page loads",
   ];
-  int? selectedIndexChekcBox;
+  int selectedIndexChekcBox = 0;
 
   void chooseIndex(int? idx) {
-    selectedIndexChekcBox = idx;
+    if (idx != null) {
+      selectedIndexChekcBox = idx;
+    }
     update();
   }
 }

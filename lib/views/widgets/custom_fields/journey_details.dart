@@ -36,21 +36,10 @@ class JourneyDetails extends StatelessWidget {
         Padding(padding: EdgeInsets.only(bottom: 4)),
         Align(alignment: Alignment.center, child: Icon(Icons.swap_calls)),
         _buildTitle("To"),
-        TextField(),
+        TextFormField(),
         Padding(padding: EdgeInsets.only(bottom: 8)),
         _buildTitle("Date"),
-        TextFormField(
-          controller: dateController,
-          decoration: InputDecoration(
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(right: 12),
-              child: IconButton(
-                onPressed: () => pickDate(context),
-                icon: Icon(Icons.calendar_month),
-              ),
-            ),
-          ),
-        ),
+        _buildDatePicker(context),
         Padding(padding: EdgeInsets.only(bottom: 8)),
         _buildTitle("Class"),
         _buildClassSection(),
@@ -59,16 +48,7 @@ class JourneyDetails extends StatelessWidget {
         _buildQuotaSection(),
         Padding(padding: EdgeInsets.only(bottom: 8)),
         _buildTitle("Train No"),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * .7,
-              child: TextField(),
-            ),
-            IconButton(onPressed: () {}, icon: Icon(Icons.search_rounded)),
-          ],
-        ),
+        _buildSearchTrainSection(context),
         Padding(padding: EdgeInsets.only(bottom: 8)),
         _buildTitle("Boarding Station"),
         TextField(decoration: InputDecoration(hintText: "Optional")),
@@ -78,25 +58,53 @@ class JourneyDetails extends StatelessWidget {
     );
   }
 
+  Row _buildSearchTrainSection(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width * .7,
+          child: TextField(),
+        ),
+        IconButton(onPressed: () {}, icon: Icon(Icons.search_rounded)),
+      ],
+    );
+  }
+
+  TextFormField _buildDatePicker(BuildContext context) {
+    return TextFormField(
+      controller: dateController,
+      validator: (value) {
+        if (value == null) {
+          return "Pick a date";
+        } else {
+          return null;
+        }
+      },
+      decoration: InputDecoration(
+        suffixIcon: Padding(
+          padding: const EdgeInsets.only(right: 12),
+          child: IconButton(
+            onPressed: () => pickDate(context),
+            icon: Icon(Icons.calendar_month),
+          ),
+        ),
+      ),
+    );
+  }
+
   GetBuilder<JourneyDetailsViewmodel> _buildClassSection() {
     return GetBuilder<JourneyDetailsViewmodel>(
       builder: (controller) {
-        return TextField(
-          decoration: InputDecoration(
-            suffixIcon: Padding(
-              padding: EdgeInsets.only(right: 12),
-              child: DropdownButtonFormField<String>(
-                value: controller.selectedClass,
-                items:
-                    controller.availableClass
-                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                        .toList(),
-                onChanged: (val) {
-                  controller.chooseClass(val);
-                },
-              ),
-            ),
-          ),
+        return DropdownButtonFormField<String>(
+          value: controller.selectedClass,
+          items:
+              controller.availableClass
+                  .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                  .toList(),
+          onChanged: (val) {
+            controller.chooseClass(val);
+          },
         );
       },
     );
@@ -105,22 +113,15 @@ class JourneyDetails extends StatelessWidget {
   GetBuilder<JourneyDetailsViewmodel> _buildQuotaSection() {
     return GetBuilder<JourneyDetailsViewmodel>(
       builder: (controller) {
-        return TextField(
-          decoration: InputDecoration(
-            suffixIcon: Padding(
-              padding: EdgeInsets.only(right: 12),
-              child: DropdownButtonFormField<String>(
-                value: controller.selectedQuota,
-                items:
-                    controller.availableQuota
-                        .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                        .toList(),
-                onChanged: (val) {
-                  controller.chooseQuota(val);
-                },
-              ),
-            ),
-          ),
+        return DropdownButtonFormField<String>(
+          value: controller.selectedQuota,
+          items:
+              controller.availableQuota
+                  .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                  .toList(),
+          onChanged: (val) {
+            controller.chooseQuota(val);
+          },
         );
       },
     );
