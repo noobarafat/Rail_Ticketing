@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
 import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
 import 'package:rail_ticketing/views/widgets/custom_checkbox.dart';
 
@@ -9,6 +11,20 @@ class JourneyDetails extends StatelessWidget {
   final JourneyDetailsViewmodel _journeyDetailsViewmodel = Get.put(
     JourneyDetailsViewmodel(),
   );
+
+  final TextEditingController dateController = TextEditingController();
+
+  Future<void> pickDate(BuildContext context) async {
+    DateTime? newDate = await showDatePicker(
+      context: context,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2030),
+    );
+    if (newDate != null && newDate != _journeyDetailsViewmodel.selectedDate) {
+      _journeyDetailsViewmodel.updateDate(newDate);
+      dateController.text = DateFormat('dd-MM-yyyy').format(newDate);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +39,13 @@ class JourneyDetails extends StatelessWidget {
         TextField(),
         Padding(padding: EdgeInsets.only(bottom: 8)),
         _buildTitle("Date"),
-        TextField(
+        TextFormField(
+          controller: dateController,
           decoration: InputDecoration(
             suffixIcon: Padding(
               padding: const EdgeInsets.only(right: 12),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () => pickDate(context),
                 icon: Icon(Icons.calendar_month),
               ),
             ),

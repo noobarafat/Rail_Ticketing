@@ -1,6 +1,14 @@
 import 'package:get/get.dart';
 
 class JourneyDetailsViewmodel extends GetxController {
+  DateTime? selectedDate;
+
+  void updateDate(DateTime? date) {
+    selectedDate = date;
+    print(selectedDate);
+    update();
+  }
+
   final List<String> availableClass = [
     "EA",
     "1A",
