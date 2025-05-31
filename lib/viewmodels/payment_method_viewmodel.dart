@@ -35,7 +35,7 @@ class PaymentMethodViewmodel extends GetxController {
   String selectedCardType = "Master Card";
   void chooseCardType(String? card) {
     if (card != null) {
-      selectedCard = card;
+      selectedCardType = card;
     }
     update();
   }

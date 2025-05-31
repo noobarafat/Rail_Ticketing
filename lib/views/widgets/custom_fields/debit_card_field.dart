@@ -36,6 +36,7 @@ class DebitCardField extends StatelessWidget {
           padding: EdgeInsets.only(right: 12),
           child: DropdownButtonFormField<String>(
             value: controller.selectedCard,
+            
             items:
                 controller.availableCardOptions
                     .map(
