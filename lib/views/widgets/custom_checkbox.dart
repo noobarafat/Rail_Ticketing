@@ -18,6 +18,8 @@ class CustomCheckBox extends StatelessWidget {
           children: List.generate(controller.checkBoxItems.length, (index) {
             return RadioListTile(
               activeColor: ColorPallet.gradientColor1,
+              dense: true,
+              contentPadding: EdgeInsets.all(0),
               title: Text(
                 controller.checkBoxItems[index],
                 style: Theme.of(context).textTheme.headlineLarge!.copyWith(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:rail_ticketing/core/color_pallet.dart';
 import 'package:rail_ticketing/core/country_list.dart';
-import 'package:rail_ticketing/viewmodels/passenger_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/passenger_details_viewmodel.dart';
 import 'package:rail_ticketing/views/widgets/text_field_box.dart';
 
 class PassengerDetails extends StatelessWidget {
@@ -96,7 +97,7 @@ class PassengerDetails extends StatelessWidget {
               },
             ),
             ElevatedButton(
-              onPressed: () => passengerViewmodel.addUser(),
+              onPressed: () => passengerViewmodel.addPassenger(),
               child: Icon(Icons.add),
             ),
           ],

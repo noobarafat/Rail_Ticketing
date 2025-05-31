@@ -3,17 +3,17 @@ import 'package:rail_ticketing/core/country_list.dart';
 import 'package:rail_ticketing/models/passenger_model.dart';
 
 class PassengerDetailsViewmodel extends GetxController {
-  List<PassengerModel> passengers = [];
+  List<PassengerDetailsModel> passengers = [];
 
   @override
   void onInit() {
-    addUser();
+    addPassenger();
     update();
     super.onInit();
   }
 
-  void addUser() {
-    passengers.add(PassengerModel());
+  void addPassenger() {
+    passengers.add(PassengerDetailsModel());
     update();
   }
 

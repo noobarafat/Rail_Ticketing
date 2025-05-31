@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PassengerModel {
+class PassengerDetailsModel {
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController berth = TextEditingController();
