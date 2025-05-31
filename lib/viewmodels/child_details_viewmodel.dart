@@ -1,16 +1,23 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rail_ticketing/models/child_details_model.dart';
 
 class ChildDetailsViewmodel extends GetxController {
   List<ChildDetailsModel> childPessengers = [];
+  List<GlobalKey<FormState>> childFormKeys = [];
 
   void addChildPassenger() {
     childPessengers.add(ChildDetailsModel());
+    childFormKeys.add(GlobalKey<FormState>());
     update();
   }
 
   void removeChildPassenger(int index) {
+    childPessengers[index].childNameController.dispose();
+
     childPessengers.removeAt(index);
+    childFormKeys.removeAt(index);
+
     update();
   }
 
@@ -21,20 +28,33 @@ class ChildDetailsViewmodel extends GetxController {
     "Three year",
     "Four year",
   ];
-  String selectedAge = "Below one year";
-  void chooseAge(String? age) {
-    if (age != null) {
-      selectedAge = age;
+  List<String> avalilableGenders = ["Male", "Female", "Transgender"];
+
+  bool validateChildDetails() {
+    bool isValid = true;
+
+    for (int i = 0; i < childFormKeys.length; i++) {
+      var valid = childFormKeys[i].currentState?.validate() ?? false;
+      if (!valid) {
+        isValid = false;
+      }
     }
-    update();
+    return isValid;
   }
 
-  List<String> avalilableGenders = ["Male", "Female", "Transgender"];
-  String selectedGender = "Male";
-  void chooseGender(String? gender) {
-    if (gender != null) {
-      selectedGender = gender;
-    }
-    update();
+  List<Map<String, String>> childPassengerDataList = [];
+  void collectDate() {
+    childPassengerDataList =
+        childPessengers
+            .map(
+              (child) => {
+                'name': child.childNameController.text.trim(),
+                'age': child.childAge,
+                'gender': child.childGender,
+              },
+            )
+            .toList();
+
+    print(childPassengerDataList);
   }
 }

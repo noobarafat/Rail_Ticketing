@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ChildDetailsModel {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController age = TextEditingController();
-  TextEditingController gender = TextEditingController();
+  TextEditingController childNameController;
+  String childAge = "Below one year";
+  String childGender = "Male";
+
+  ChildDetailsModel() : childNameController = TextEditingController();
 }
