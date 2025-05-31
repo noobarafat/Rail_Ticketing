@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:rail_ticketing/core/color_pallet.dart';
 
 import 'package:rail_ticketing/views/pages/home_page.dart';
@@ -28,6 +29,7 @@ class RailTicket extends StatelessWidget {
         borderRadius: BorderRadius.circular(32),
         borderSide: BorderSide.none,
       ),
+      hintStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
     ),
 
     textTheme: TextTheme(
@@ -50,6 +52,10 @@ class RailTicket extends StatelessWidget {
       labelColor: Colors.yellow,
       dividerColor: Colors.transparent,
       labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    ),
+
+    dropdownMenuTheme: DropdownMenuThemeData(
+      textStyle: TextStyle(fontSize: 12, color: Colors.red),
     ),
   );
 }

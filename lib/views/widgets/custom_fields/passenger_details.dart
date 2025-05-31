@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rail_ticketing/core/color_pallet.dart';
+import 'package:rail_ticketing/core/country_list.dart';
 import 'package:rail_ticketing/viewmodels/passenger_viewmodel.dart';
 import 'package:rail_ticketing/views/widgets/text_field_box.dart';
 
 class PassengerDetails extends StatelessWidget {
   PassengerDetails({super.key});
-  final PassengerViewmodel passengerViewmodel = Get.put(PassengerViewmodel());
+  final PassengerDetailsViewmodel passengerViewmodel = Get.put(
+    PassengerDetailsViewmodel(),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<PassengerViewmodel>(
+    return GetBuilder<PassengerDetailsViewmodel>(
       builder: (controller) {
         return Column(
           children: [
@@ -63,31 +67,27 @@ class PassengerDetails extends StatelessWidget {
                       onPressed: () {
                         passengerViewmodel.removeUser(index);
                       },
-                      icon: Icon(Icons.clear),
+                      icon: Icon(
+                        Icons.clear,
+                        color: ColorPallet.gradientColor2,
+                      ),
                     ),
                     CustomTextFieldBox(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _buildNameAgeRow(),
-                          _buildPassengerFields("Opt Beth", "Male"),
-                          _buildPassengerFields("Berth Pref", "Select Meal"),
-                          _buildPassengerFields(
-                            "Avalil Consession",
-                            "Bed Roll",
-                          ),
+                          const SizedBox(height: 10),
+                          _buildBerthAndGender(controller),
+                          const SizedBox(height: 10),
+                          _buildBerthPreferenceAndMealSection(controller),
+                          const SizedBox(height: 10),
+                          _buildAvailAndBed(),
+                          const SizedBox(height: 10),
+                          _buildCountryField(controller),
+                          const SizedBox(height: 10),
+                          _buildPassportCardNumberSection(),
                           Padding(padding: EdgeInsets.only(bottom: 8)),
-                          TextField(
-                            decoration: InputDecoration(
-                              suffixIcon: Padding(
-                                padding: EdgeInsets.only(right: 8),
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.arrow_drop_down),
-                                ),
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -115,7 +115,7 @@ class PassengerDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 12),
+                padding: const EdgeInsets.only(left: 12, bottom: 6),
                 child: Text("Name"),
               ),
               TextFormField(),
@@ -129,7 +129,7 @@ class PassengerDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 12),
+                padding: const EdgeInsets.only(left: 12, bottom: 6),
                 child: Text("Age"),
               ),
               TextFormField(),
@@ -140,34 +140,173 @@ class PassengerDetails extends StatelessWidget {
     );
   }
 
-  Row _buildPassengerFields(String name1, String name2) {
+  Row _buildBerthAndGender(PassengerDetailsViewmodel controller) {
     return Row(
       children: [
         Flexible(
           flex: 1,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 12),
-                child: Text(name1),
-              ),
-              TextFormField(),
-            ],
+          child: TextFormField(
+            decoration: InputDecoration(
+              enabled: false,
+              fillColor: ColorPallet.gradientColor1.withAlpha(36),
+              hintText: "Opt Berth",
+            ),
           ),
         ),
         Padding(padding: EdgeInsets.only(left: 10)),
         Flexible(
           flex: 1,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 12),
-                child: Text(name2),
+          child: TextField(
+            decoration: InputDecoration(
+              suffixIcon: Padding(
+                padding: EdgeInsets.only(right: 12),
+                child: DropdownButtonFormField<String>(
+                  value: controller.selectedGender,
+                  items:
+                      controller.genders
+                          .map(
+                            (e) => DropdownMenuItem(value: e, child: Text(e)),
+                          )
+                          .toList(),
+                  onChanged: (val) {
+                    controller.chooseGender(val);
+                  },
+                ),
               ),
-              TextFormField(),
-            ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCountryField(PassengerDetailsViewmodel controller) {
+    return TextField(
+      decoration: InputDecoration(
+        suffixIcon: Padding(
+          padding: EdgeInsets.only(right: 12),
+          child: DropdownButtonFormField<String>(
+            value: controller.selectedCountry,
+            items:
+                CountryList.countries
+                    .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                    .toList(),
+            onChanged: (val) {
+              controller.chooseCountry(val);
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Row _buildBerthPreferenceAndMealSection(
+    PassengerDetailsViewmodel controller,
+  ) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            decoration: InputDecoration(
+              suffixIcon: Padding(
+                padding: EdgeInsets.only(right: 12),
+                child: DropdownButtonFormField<String>(
+                  value: controller.selectedBerthPref,
+                  items:
+                      controller.availableBerthPreferences
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(e, style: TextStyle(fontSize: 10)),
+                            ),
+                          )
+                          .toList(),
+                  onChanged: (val) {
+                    controller.chooseBerthPref(val);
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(padding: EdgeInsets.only(left: 10)),
+        Expanded(
+          child: TextField(
+            decoration: InputDecoration(
+              suffixIcon: Padding(
+                padding: EdgeInsets.only(right: 12),
+                child: DropdownButtonFormField<String>(
+                  value: controller.selectedMeal,
+                  items:
+                      controller.availableMeals
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(e, style: TextStyle(fontSize: 10)),
+                            ),
+                          )
+                          .toList(),
+                  onChanged: (val) {
+                    controller.chooseMeal(val);
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row _buildAvailAndBed() {
+    return Row(
+      children: [
+        Flexible(
+          flex: 1,
+          child: TextFormField(
+            decoration: InputDecoration(
+              enabled: false,
+              fillColor: ColorPallet.gradientColor1.withAlpha(36),
+              hintText: "Avail Concession",
+              suffixIcon: Icon(Icons.arrow_drop_down),
+            ),
+          ),
+        ),
+        Padding(padding: EdgeInsets.only(left: 10)),
+        Flexible(
+          flex: 1,
+          child: TextFormField(
+            decoration: InputDecoration(
+              enabled: false,
+              //fillColor: ColorPallet.gradientColor1.withAlpha(36),
+              hintText: "Bed Roll",
+              suffixIcon: Icon(Icons.square),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row _buildPassportCardNumberSection() {
+    return Row(
+      children: [
+        Flexible(
+          flex: 1,
+          child: TextFormField(
+            decoration: InputDecoration(
+              enabled: false,
+              fillColor: ColorPallet.gradientColor1.withAlpha(36),
+              hintText: "Passport/Travel document",
+              suffixIcon: Icon(Icons.arrow_drop_down),
+            ),
+          ),
+        ),
+        Padding(padding: EdgeInsets.only(left: 10)),
+        Flexible(
+          flex: 1,
+          child: TextFormField(
+            decoration: InputDecoration(hintText: "Card Number"),
           ),
         ),
       ],

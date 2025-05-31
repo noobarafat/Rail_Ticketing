@@ -30,6 +30,7 @@ class WebsiteFormPage extends StatelessWidget {
               Padding(padding: EdgeInsets.only(top: 16)),
               CustomTextFieldBox(child: JourneyDetails()),
               Padding(padding: EdgeInsets.only(top: 16)),
+              _sectionHeader(context, "Passenger Details"),
               PassengerDetails(),
             ],
           ),
