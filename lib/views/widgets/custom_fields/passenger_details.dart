@@ -49,10 +49,9 @@ class PassengerDetails extends StatelessWidget {
                             const SizedBox(height: 10),
                             _buildBerthAndGender(controller, passenger),
                             const SizedBox(height: 10),
-                            _buildBerthPreferenceAndMealSection(
-                              controller,
-                              passenger,
-                            ),
+                            _buildBerthPreference(controller, passenger),
+                            const SizedBox(height: 10),
+                            _buildMealSection(controller, passenger),
                             const SizedBox(height: 10),
                             _buildAvailAndBed(),
                             const SizedBox(height: 10),
@@ -186,78 +185,59 @@ class PassengerDetails extends StatelessWidget {
     PassengerDetailsViewmodel controller,
     PassengerDetailsModel passenger,
   ) {
-    return TextField(
-      decoration: InputDecoration(
-        suffixIcon: Padding(
-          padding: EdgeInsets.only(right: 12),
-          child: DropdownButtonFormField<String>(
-            value: passenger.passengerCountry,
-            items:
-                CountryList.countries
-                    .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                    .toList(),
-            onChanged: (val) {
-              if (val != null) {
-                passenger.passengerCountry = val;
-                controller.update();
-              }
-            },
-          ),
-        ),
-      ),
+    return DropdownButtonFormField<String>(
+      value: passenger.passengerCountry,
+      items:
+          CountryList.countries
+              .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+              .toList(),
+      onChanged: (val) {
+        if (val != null) {
+          passenger.passengerCountry = val;
+          controller.update();
+        }
+      },
     );
   }
 
-  Row _buildBerthPreferenceAndMealSection(
+  Widget _buildBerthPreference(
     PassengerDetailsViewmodel controller,
     PassengerDetailsModel passenger,
   ) {
-    return Row(
-      children: [
-        Expanded(
-          child: DropdownButtonFormField<String>(
-            value: passenger.passengerBerthPref,
-            items:
-                controller.availableBerthPreferences
-                    .map(
-                      (e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(e, style: TextStyle(fontSize: 10)),
-                      ),
-                    )
-                    .toList(),
-            onChanged: (val) {
-              if (val != null) {
-                passenger.passengerBerthPref = val;
-              }
-            },
-          ),
-        ),
-        Padding(padding: EdgeInsets.only(left: 10)),
-        Expanded(
-          child: DropdownButtonFormField<String>(
-            value: passenger.passengerMeal,
-            items:
-                controller.availableMeals
-                    .map(
-                      (e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(e, style: TextStyle(fontSize: 10)),
-                      ),
-                    )
-                    .toList(),
-            onChanged: (val) {
-              if (val != null) {
-                passenger.passengerMeal = val;
-              }
-            },
-          ),
-        ),
-      ],
+    return DropdownButtonFormField<String>(
+      value: passenger.passengerBerthPref,
+      items:
+          controller.availableBerthPreferences
+              .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+              .toList(),
+      onChanged: (val) {
+        if (val != null) {
+          passenger.passengerBerthPref = val;
+        }
+      },
     );
   }
 
-  Row _buildAvailAndBed() {
+  Widget _buildMealSection(
+    PassengerDetailsViewmodel controller,
+    PassengerDetailsModel passenger,
+  ) {
+    return DropdownButtonFormField<String>(
+      decoration: InputDecoration(),
+      value: passenger.passengerMeal,
+      items:
+          controller.availableMeals
+              .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+              .toList(),
+      onChanged: (val) {
+        if (val != null) {
+          passenger.passengerMeal = val;
+        }
+      },
+    );
+  }
+
+  Widget _buildAvailAndBed() {
     return Row(
       children: [
         Flexible(
