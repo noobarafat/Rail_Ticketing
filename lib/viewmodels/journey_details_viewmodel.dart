@@ -1,13 +1,28 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:rail_ticketing/models/journey_details_model.dart';
 
 class JourneyDetailsViewmodel extends GetxController {
-  
-
-  DateTime? selectedDate;
+  GlobalKey journeyDetailsFormKey = GlobalKey<FormState>();
+  JourneyDetailsModel journeyDetails = JourneyDetailsModel();
 
   void updateDate(DateTime? date) {
-    selectedDate = date;
+    journeyDetails.journyDate = date;
     update();
+  }
+
+  final TextEditingController dateController = TextEditingController();
+
+  Future<void> pickDate(BuildContext context) async {
+    DateTime? newDate = await showDatePicker(
+      context: context,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2030),
+    );
+    if (newDate != null) {
+      dateController.text = DateFormat('dd-MM-yyyy').format(newDate);
+    }
   }
 
   final List<String> availableClass = [
@@ -26,11 +41,9 @@ class JourneyDetailsViewmodel extends GetxController {
     "EV",
   ];
 
-  String selectedClass = "EA";
-
   void chooseClass(String? s) {
     if (s != null) {
-      selectedClass = s;
+      journeyDetails.journeyClass = s;
     }
     update();
   }
@@ -45,11 +58,9 @@ class JourneyDetailsViewmodel extends GetxController {
     "Lower Berth",
   ];
 
-  String selectedQuota = "General";
-
   void chooseQuota(String? s) {
     if (s != null) {
-      selectedQuota = s;
+      journeyDetails.journeyQuota = s;
     }
     update();
   }
@@ -64,6 +75,8 @@ class JourneyDetailsViewmodel extends GetxController {
   void chooseIndex(int? idx) {
     if (idx != null) {
       selectedIndexChekcBox = idx;
+      journeyDetails.selectedAvialibility =
+          checkBoxItems[selectedIndexChekcBox];
     }
     update();
   }

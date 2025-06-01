@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
 import 'package:rail_ticketing/views/widgets/custom_checkbox.dart';
@@ -12,49 +11,63 @@ class JourneyDetails extends StatelessWidget {
     JourneyDetailsViewmodel(),
   );
 
-  final TextEditingController dateController = TextEditingController();
-
-  Future<void> pickDate(BuildContext context) async {
-    DateTime? newDate = await showDatePicker(
-      context: context,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2030),
-    );
-    if (newDate != null && newDate != _journeyDetailsViewmodel.selectedDate) {
-      _journeyDetailsViewmodel.updateDate(newDate);
-      dateController.text = DateFormat('dd-MM-yyyy').format(newDate);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildTitle("From"),
-        TextFormField(),
-        Padding(padding: EdgeInsets.only(bottom: 4)),
-        Align(alignment: Alignment.center, child: Icon(Icons.swap_calls)),
-        _buildTitle("To"),
-        TextFormField(),
-        Padding(padding: EdgeInsets.only(bottom: 8)),
-        _buildTitle("Date"),
-        _buildDatePicker(context),
-        Padding(padding: EdgeInsets.only(bottom: 8)),
-        _buildTitle("Class"),
-        _buildClassSection(),
-        Padding(padding: EdgeInsets.only(bottom: 8)),
-        _buildTitle("Quota"),
-        _buildQuotaSection(),
-        Padding(padding: EdgeInsets.only(bottom: 8)),
-        _buildTitle("Train No"),
-        _buildSearchTrainSection(context),
-        Padding(padding: EdgeInsets.only(bottom: 8)),
-        _buildTitle("Boarding Station"),
-        TextField(decoration: InputDecoration(hintText: "Optional")),
-        Padding(padding: EdgeInsets.only(bottom: 4)),
-        CustomCheckBox(),
-      ],
+    return GetBuilder<JourneyDetailsViewmodel>(
+      builder: (controller) {
+        return Form(
+          key: controller.journeyDetailsFormKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTitle("From"),
+              TextFormField(
+                controller: controller.journeyDetails.journeyFrom,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Choose departure";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 4)),
+              Align(alignment: Alignment.center, child: Icon(Icons.swap_calls)),
+              _buildTitle("To"),
+              TextFormField(
+                controller: controller.journeyDetails.journeyTo,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Choose destination";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 8)),
+              _buildTitle("Date"),
+              _buildDatePicker(context, controller),
+              Padding(padding: EdgeInsets.only(bottom: 8)),
+              _buildTitle("Class"),
+              _buildClassSection(),
+              Padding(padding: EdgeInsets.only(bottom: 8)),
+              _buildTitle("Quota"),
+              _buildQuotaSection(),
+              Padding(padding: EdgeInsets.only(bottom: 8)),
+              _buildTitle("Train No"),
+              _buildSearchTrainSection(context),
+              Padding(padding: EdgeInsets.only(bottom: 8)),
+              _buildTitle("Boarding Station"),
+              TextField(
+                controller: controller.journeyDetails.boradingStation,
+                decoration: InputDecoration(hintText: "Optional"),
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 4)),
+              CustomCheckBox(),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -71,9 +84,12 @@ class JourneyDetails extends StatelessWidget {
     );
   }
 
-  TextFormField _buildDatePicker(BuildContext context) {
+  TextFormField _buildDatePicker(
+    BuildContext context,
+    JourneyDetailsViewmodel controller,
+  ) {
     return TextFormField(
-      controller: dateController,
+      controller: controller.dateController,
       validator: (value) {
         if (value == null) {
           return "Pick a date";
@@ -85,7 +101,7 @@ class JourneyDetails extends StatelessWidget {
         suffixIcon: Padding(
           padding: const EdgeInsets.only(right: 12),
           child: IconButton(
-            onPressed: () => pickDate(context),
+            onPressed: () => controller.pickDate(context),
             icon: Icon(Icons.calendar_month),
           ),
         ),
@@ -97,7 +113,7 @@ class JourneyDetails extends StatelessWidget {
     return GetBuilder<JourneyDetailsViewmodel>(
       builder: (controller) {
         return DropdownButtonFormField<String>(
-          value: controller.selectedClass,
+          value: controller.journeyDetails.journeyClass,
           items:
               controller.availableClass
                   .map((e) => DropdownMenuItem(value: e, child: Text(e)))
@@ -114,7 +130,7 @@ class JourneyDetails extends StatelessWidget {
     return GetBuilder<JourneyDetailsViewmodel>(
       builder: (controller) {
         return DropdownButtonFormField<String>(
-          value: controller.selectedQuota,
+          value: controller.journeyDetails.journeyQuota,
           items:
               controller.availableQuota
                   .map((e) => DropdownMenuItem(value: e, child: Text(e)))
