@@ -71,7 +71,20 @@ class ChildDetails extends StatelessWidget {
               buttonName: "+",
               buttonHeight: 40,
               buttonWidth: double.maxFinite,
-              onPressed: () => _childDetailsViewmodel.addChildPassenger(),
+              onPressed: () {
+                bool successful = _childDetailsViewmodel.addChildPassenger();
+                if (!successful) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      duration: Duration(milliseconds: 800),
+                      margin: EdgeInsets.symmetric(horizontal: 40),
+                      content: Center(
+                        child: Text("Maximum 2 children are allowed"),
+                      ),
+                    ),
+                  );
+                }
+              },
             ),
           ],
         );

@@ -6,10 +6,14 @@ class ChildDetailsViewmodel extends GetxController {
   List<ChildDetailsModel> childPessengers = [];
   List<GlobalKey<FormState>> childFormKeys = [];
 
-  void addChildPassenger() {
+  bool addChildPassenger() {
+    if (childPessengers.length >= 2) {
+      return false;
+    }
     childPessengers.add(ChildDetailsModel());
     childFormKeys.add(GlobalKey<FormState>());
     update();
+    return true;
   }
 
   void removeChildPassenger(int index) {

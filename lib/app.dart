@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:rail_ticketing/core/color_pallet.dart';
 
 import 'package:rail_ticketing/views/pages/home_page.dart';
@@ -56,6 +55,12 @@ class RailTicket extends StatelessWidget {
 
     dropdownMenuTheme: DropdownMenuThemeData(
       textStyle: TextStyle(fontSize: 12, color: Colors.red),
+    ),
+
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      behavior: SnackBarBehavior.floating,
     ),
   );
 }
