@@ -4,5 +4,15 @@ import 'package:rail_ticketing/models/login_model.dart';
 
 class LoginViewmodel extends GetxController {
   LoginModel loginModel = LoginModel();
-  GlobalKey loginFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  bool isObsecure = true;
+
+  void toggleObsecure() {
+    isObsecure = !isObsecure;
+    update();
+  }
+
+  bool validateLoginField() {
+    return loginFormKey.currentState?.validate() ?? false;
+  }
 }

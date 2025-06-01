@@ -91,7 +91,7 @@ class JourneyDetails extends StatelessWidget {
     return TextFormField(
       controller: controller.dateController,
       validator: (value) {
-        if (value == null) {
+        if (value == null || controller.journeyDetails.journyDate == null) {
           return "Pick a date";
         } else {
           return null;

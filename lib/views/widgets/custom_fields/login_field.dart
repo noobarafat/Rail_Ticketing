@@ -37,6 +37,7 @@ class LoginField extends StatelessWidget {
               ),
               TextFormField(
                 controller: controller.loginModel.userPassword,
+                obscureText: controller.isObsecure,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return "password required";

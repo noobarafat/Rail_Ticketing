@@ -35,6 +35,9 @@ class ChildDetailsViewmodel extends GetxController {
   List<String> avalilableGenders = ["Male", "Female", "Transgender"];
 
   bool validateChildDetails() {
+    if (childPessengers.isEmpty) {
+      return true;
+    }
     bool isValid = true;
 
     for (int i = 0; i < childFormKeys.length; i++) {

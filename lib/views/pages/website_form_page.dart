@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rail_ticketing/viewmodels/child_details_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/login_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/passenger_details_viewmodel.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/child_details.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/debit_card_field.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/journey_details.dart';
@@ -9,7 +14,43 @@ import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
 import 'package:rail_ticketing/views/widgets/text_field_box.dart';
 
 class WebsiteFormPage extends StatelessWidget {
-  const WebsiteFormPage({super.key});
+  WebsiteFormPage({super.key});
+
+  final ChildDetailsViewmodel _childDetailsViewmodel = Get.put(
+    ChildDetailsViewmodel(),
+  );
+  final JourneyDetailsViewmodel _journeyDetailsViewmodel = Get.put(
+    JourneyDetailsViewmodel(),
+  );
+  final LoginViewmodel _loginViewmodel = Get.put(LoginViewmodel());
+  final PassengerDetailsViewmodel _passengerDetailsViewmodel = Get.put(
+    PassengerDetailsViewmodel(),
+  );
+
+  void submitForm(BuildContext context) {
+    bool validateChildDetails = _childDetailsViewmodel.validateChildDetails();
+    bool validatePassengerDetails =
+        _passengerDetailsViewmodel.validatePessengerDetails();
+    bool validateLoginDetails = _loginViewmodel.validateLoginField();
+    bool validateJourneyDetails =
+        _journeyDetailsViewmodel.validateJourneyDetails();
+
+    if (validateLoginDetails &&
+        validateJourneyDetails &&
+        validatePassengerDetails &&
+        validateChildDetails) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Successfull")));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(milliseconds: 500),
+          content: Text("Fill all the required information"),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +93,7 @@ class WebsiteFormPage extends StatelessWidget {
                 buttonName: "Book Now",
                 buttonHeight: 40,
                 buttonWidth: double.maxFinite,
-                onPressed: () {},
+                onPressed: () => submitForm(context),
               ),
             ],
           ),

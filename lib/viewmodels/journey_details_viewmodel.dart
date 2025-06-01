@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:rail_ticketing/models/journey_details_model.dart';
 
 class JourneyDetailsViewmodel extends GetxController {
-  GlobalKey journeyDetailsFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> journeyDetailsFormKey = GlobalKey<FormState>();
   JourneyDetailsModel journeyDetails = JourneyDetailsModel();
 
   void updateDate(DateTime? date) {
@@ -22,6 +22,7 @@ class JourneyDetailsViewmodel extends GetxController {
     );
     if (newDate != null) {
       dateController.text = DateFormat('dd-MM-yyyy').format(newDate);
+      updateDate(newDate);
     }
   }
 
@@ -79,5 +80,15 @@ class JourneyDetailsViewmodel extends GetxController {
           checkBoxItems[selectedIndexChekcBox];
     }
     update();
+  }
+
+  bool validateJourneyDetails() {
+    bool valid = journeyDetailsFormKey.currentState?.validate() ?? false;
+
+    if (journeyDetails.journyDate == null || !valid) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

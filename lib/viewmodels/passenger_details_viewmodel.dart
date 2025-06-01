@@ -57,4 +57,15 @@ class PassengerDetailsViewmodel extends GetxController {
     "NON VEG (DIABETIC)",
     "NO FOOD",
   ];
+
+  bool validatePessengerDetails() {
+    bool isValid = true;
+    for (int i = 0; i < passengerFormKey.length; i++) {
+      bool valid = passengerFormKey[i].currentState?.validate() ?? false;
+      if (!valid) {
+        isValid = false;
+      }
+    }
+    return isValid;
+  }
 }

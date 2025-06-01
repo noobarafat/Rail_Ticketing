@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:rail_ticketing/viewmodels/login_viewmodel.dart';
 import 'package:rail_ticketing/views/pages/rail_connect_form_page.dart';
 import 'package:rail_ticketing/views/pages/website_form_page.dart';
 
@@ -14,6 +16,7 @@ class FormInputPage extends StatefulWidget {
 class _FormInputPageState extends State<FormInputPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final _loginViewmodel = Get.put(LoginViewmodel());
 
   @override
   void initState() {
@@ -41,9 +44,19 @@ class _FormInputPageState extends State<FormInputPage>
       ),
       automaticallyImplyLeading: false,
       actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.remove_red_eye, size: 32, color: Colors.white),
+        GetBuilder<LoginViewmodel>(
+          builder: (_) {
+            return IconButton(
+              onPressed: _loginViewmodel.toggleObsecure,
+              icon: Icon(
+                _loginViewmodel.isObsecure
+                    ? Icons.visibility_off
+                    : Icons.visibility,
+                size: 32,
+                color: Colors.white,
+              ),
+            );
+          },
         ),
         IconButton(
           onPressed: () {},

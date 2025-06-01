@@ -28,6 +28,10 @@ class RailTicket extends StatelessWidget {
         borderRadius: BorderRadius.circular(32),
         borderSide: BorderSide.none,
       ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(32),
+        borderSide: BorderSide(color: Colors.red),
+      ),
       hintStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
     ),
 
