@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rail_ticketing/core/country_list.dart';
-import 'package:rail_ticketing/models/passenger_model.dart';
+
+import 'package:rail_ticketing/models/passenger_detrails_model.dart';
 
 class PassengerDetailsViewmodel extends GetxController {
   List<PassengerDetailsModel> passengers = [];
+  List<GlobalKey<FormState>> passengerFormKey = [];
 
   @override
   void onInit() {
@@ -12,34 +14,27 @@ class PassengerDetailsViewmodel extends GetxController {
     super.onInit();
   }
 
-  void addPassenger() {
+  bool addPassenger() {
+    if (passengers.length >= 6) {
+      return false;
+    }
     passengers.add(PassengerDetailsModel());
+    passengerFormKey.add(GlobalKey<FormState>());
     update();
+
+    return true;
   }
 
   void removeUser(int index) {
-    passengers[index].nameController.dispose();
-    passengers[index].ageController.dispose();
+    passengers[index].passengerName.dispose();
+    passengers[index].passengerAge.dispose();
+
     passengers.removeAt(index);
+    passengerFormKey.removeAt(index);
     update();
   }
 
   List<String> genders = ["Male", "Female", "Transgender"];
-  String selectedGender = "Male";
-  void chooseGender(String? gender) {
-    if (gender != null) {
-      selectedGender = gender;
-    }
-    update();
-  }
-
-  String selectedCountry = CountryList.countries[0];
-  void chooseCountry(String? country) {
-    if (country != null) {
-      selectedCountry = country;
-    }
-    update();
-  }
 
   List<String> availableBerthPreferences = [
     "Berth Preference",
@@ -52,13 +47,6 @@ class PassengerDetailsViewmodel extends GetxController {
     "CABIN",
     "COUPE",
   ];
-  String selectedBerthPref = "Berth Preference";
-  void chooseBerthPref(String? berth) {
-    if (berth != null) {
-      selectedBerthPref = berth;
-    }
-    update();
-  }
 
   List<String> availableMeals = [
     "Select Meal",
@@ -69,11 +57,4 @@ class PassengerDetailsViewmodel extends GetxController {
     "NON VEG (DIABETIC)",
     "NO FOOD",
   ];
-  String selectedMeal = "Select Meal";
-  void chooseMeal(String? meal) {
-    if (meal != null) {
-      selectedMeal = meal;
-    }
-    update();
-  }
 }

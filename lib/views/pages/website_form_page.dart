@@ -6,7 +6,6 @@ import 'package:rail_ticketing/views/widgets/custom_fields/login_field.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/passenger_details.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/payment_field.dart';
 import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
-
 import 'package:rail_ticketing/views/widgets/text_field_box.dart';
 
 class WebsiteFormPage extends StatelessWidget {

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:rail_ticketing/core/color_pallet.dart';
 import 'package:rail_ticketing/core/country_list.dart';
+import 'package:rail_ticketing/models/passenger_detrails_model.dart';
 import 'package:rail_ticketing/viewmodels/passenger_details_viewmodel.dart';
 import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
 import 'package:rail_ticketing/views/widgets/text_field_box.dart';
@@ -24,77 +25,48 @@ class PassengerDetails extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               itemCount: passengerViewmodel.passengers.length,
               itemBuilder: (context, index) {
-                final pessenger = passengerViewmodel.passengers[index];
-                // return Card(
-
-                //   margin: EdgeInsets.symmetric(vertical: 8),
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(12.0),
-                //     child: Column(
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Row(
-                //           children: [
-                //             Text(
-                //               "Passenger: ${index + 1}",
-                //               style: TextStyle(fontWeight: FontWeight.bold),
-                //             ),
-                //             Spacer(),
-                //             IconButton(
-                //               icon: Icon(Icons.delete),
-                //               onPressed:
-                //                   () => passengerViewmodel.removeUser(index),
-                //             ),
-                //           ],
-                //         ),
-                //         TextFormField(
-                //           controller: user.nameController,
-                //           decoration: InputDecoration(labelText: 'Name'),
-                //         ),
-                //         SizedBox(height: 8),
-                //         TextFormField(
-                //           controller: user.ageController,
-                //           keyboardType: TextInputType.number,
-                //           decoration: InputDecoration(labelText: 'Age'),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // );
-
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        passengerViewmodel.removeUser(index);
-                      },
-                      icon: Icon(
-                        Icons.clear,
-                        color: ColorPallet.gradientColor2,
+                final passenger = passengerViewmodel.passengers[index];
+                return Form(
+                  key: controller.passengerFormKey[index],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          passengerViewmodel.removeUser(index);
+                        },
+                        icon: Icon(
+                          Icons.clear,
+                          color: ColorPallet.gradientColor2,
+                        ),
                       ),
-                    ),
 
-                    CustomTextFieldBox(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildNameAgeRow(),
-                          const SizedBox(height: 10),
-                          _buildBerthAndGender(controller),
-                          const SizedBox(height: 10),
-                          _buildBerthPreferenceAndMealSection(controller),
-                          const SizedBox(height: 10),
-                          _buildAvailAndBed(),
-                          const SizedBox(height: 10),
-                          _buildCountryField(controller),
-                          const SizedBox(height: 10),
-                          _buildPassportCardNumberSection(),
-                          Padding(padding: EdgeInsets.only(bottom: 8)),
-                        ],
+                      CustomTextFieldBox(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildNameAgeRow(passenger),
+                            const SizedBox(height: 10),
+                            _buildBerthAndGender(controller, passenger),
+                            const SizedBox(height: 10),
+                            _buildBerthPreferenceAndMealSection(
+                              controller,
+                              passenger,
+                            ),
+                            const SizedBox(height: 10),
+                            _buildAvailAndBed(),
+                            const SizedBox(height: 10),
+                            _buildCountryField(controller, passenger),
+                            const SizedBox(height: 10),
+                            passenger.passengerCountry != "India"
+                                ? _buildPassportCardNumberSection(passenger)
+                                : SizedBox(height: 0),
+                            Padding(padding: EdgeInsets.only(bottom: 4)),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
             ),
@@ -102,7 +74,18 @@ class PassengerDetails extends StatelessWidget {
               buttonName: "+",
               buttonHeight: 40,
               buttonWidth: double.maxFinite,
-              onPressed: () => controller.addPassenger(),
+              onPressed: () {
+                bool isSuccessful = controller.addPassenger();
+                if (!isSuccessful) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      duration: const Duration(milliseconds: 800),
+                      margin: EdgeInsets.symmetric(horizontal: 40),
+                      content: Text("Maximum 6 passenger allowed"),
+                    ),
+                  );
+                }
+              },
             ),
           ],
         );
@@ -110,7 +93,7 @@ class PassengerDetails extends StatelessWidget {
     );
   }
 
-  Row _buildNameAgeRow() {
+  Row _buildNameAgeRow(PassengerDetailsModel passenger) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -123,7 +106,16 @@ class PassengerDetails extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 12, bottom: 6),
                 child: Text("Name"),
               ),
-              TextFormField(),
+              TextFormField(
+                controller: passenger.passengerName,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Name required";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -137,7 +129,16 @@ class PassengerDetails extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 12, bottom: 6),
                 child: Text("Age"),
               ),
-              TextFormField(),
+              TextFormField(
+                controller: passenger.passengerAge,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Age required";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -145,7 +146,10 @@ class PassengerDetails extends StatelessWidget {
     );
   }
 
-  Row _buildBerthAndGender(PassengerDetailsViewmodel controller) {
+  Row _buildBerthAndGender(
+    PassengerDetailsViewmodel controller,
+    PassengerDetailsModel passenger,
+  ) {
     return Row(
       children: [
         Flexible(
@@ -161,43 +165,42 @@ class PassengerDetails extends StatelessWidget {
         Padding(padding: EdgeInsets.only(left: 10)),
         Flexible(
           flex: 1,
-          child: TextField(
-            decoration: InputDecoration(
-              suffixIcon: Padding(
-                padding: EdgeInsets.only(right: 12),
-                child: DropdownButtonFormField<String>(
-                  value: controller.selectedGender,
-                  items:
-                      controller.genders
-                          .map(
-                            (e) => DropdownMenuItem(value: e, child: Text(e)),
-                          )
-                          .toList(),
-                  onChanged: (val) {
-                    controller.chooseGender(val);
-                  },
-                ),
-              ),
-            ),
+          child: DropdownButtonFormField<String>(
+            value: passenger.passengerGender,
+            items:
+                controller.genders
+                    .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                    .toList(),
+            onChanged: (val) {
+              if (val != null) {
+                passenger.passengerGender = val;
+              }
+            },
           ),
         ),
       ],
     );
   }
 
-  Widget _buildCountryField(PassengerDetailsViewmodel controller) {
+  Widget _buildCountryField(
+    PassengerDetailsViewmodel controller,
+    PassengerDetailsModel passenger,
+  ) {
     return TextField(
       decoration: InputDecoration(
         suffixIcon: Padding(
           padding: EdgeInsets.only(right: 12),
           child: DropdownButtonFormField<String>(
-            value: controller.selectedCountry,
+            value: passenger.passengerCountry,
             items:
                 CountryList.countries
                     .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                     .toList(),
             onChanged: (val) {
-              controller.chooseCountry(val);
+              if (val != null) {
+                passenger.passengerCountry = val;
+                controller.update();
+              }
             },
           ),
         ),
@@ -207,56 +210,47 @@ class PassengerDetails extends StatelessWidget {
 
   Row _buildBerthPreferenceAndMealSection(
     PassengerDetailsViewmodel controller,
+    PassengerDetailsModel passenger,
   ) {
     return Row(
       children: [
         Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              suffixIcon: Padding(
-                padding: EdgeInsets.only(right: 12),
-                child: DropdownButtonFormField<String>(
-                  value: controller.selectedBerthPref,
-                  items:
-                      controller.availableBerthPreferences
-                          .map(
-                            (e) => DropdownMenuItem(
-                              value: e,
-                              child: Text(e, style: TextStyle(fontSize: 10)),
-                            ),
-                          )
-                          .toList(),
-                  onChanged: (val) {
-                    controller.chooseBerthPref(val);
-                  },
-                ),
-              ),
-            ),
+          child: DropdownButtonFormField<String>(
+            value: passenger.passengerBerthPref,
+            items:
+                controller.availableBerthPreferences
+                    .map(
+                      (e) => DropdownMenuItem(
+                        value: e,
+                        child: Text(e, style: TextStyle(fontSize: 10)),
+                      ),
+                    )
+                    .toList(),
+            onChanged: (val) {
+              if (val != null) {
+                passenger.passengerBerthPref = val;
+              }
+            },
           ),
         ),
         Padding(padding: EdgeInsets.only(left: 10)),
         Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              suffixIcon: Padding(
-                padding: EdgeInsets.only(right: 12),
-                child: DropdownButtonFormField<String>(
-                  value: controller.selectedMeal,
-                  items:
-                      controller.availableMeals
-                          .map(
-                            (e) => DropdownMenuItem(
-                              value: e,
-                              child: Text(e, style: TextStyle(fontSize: 10)),
-                            ),
-                          )
-                          .toList(),
-                  onChanged: (val) {
-                    controller.chooseMeal(val);
-                  },
-                ),
-              ),
-            ),
+          child: DropdownButtonFormField<String>(
+            value: passenger.passengerMeal,
+            items:
+                controller.availableMeals
+                    .map(
+                      (e) => DropdownMenuItem(
+                        value: e,
+                        child: Text(e, style: TextStyle(fontSize: 10)),
+                      ),
+                    )
+                    .toList(),
+            onChanged: (val) {
+              if (val != null) {
+                passenger.passengerMeal = val;
+              }
+            },
           ),
         ),
       ],
@@ -293,7 +287,7 @@ class PassengerDetails extends StatelessWidget {
     );
   }
 
-  Row _buildPassportCardNumberSection() {
+  Row _buildPassportCardNumberSection(PassengerDetailsModel passenger) {
     return Row(
       children: [
         Flexible(
@@ -310,7 +304,8 @@ class PassengerDetails extends StatelessWidget {
         Padding(padding: EdgeInsets.only(left: 10)),
         Flexible(
           flex: 1,
-          child: TextFormField(
+          child: TextField(
+            controller: passenger.passengerCardNumner,
             decoration: InputDecoration(hintText: "Card Number"),
           ),
         ),
