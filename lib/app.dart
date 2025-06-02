@@ -24,6 +24,8 @@ class RailTicket extends StatelessWidget {
     inputDecorationTheme: InputDecorationTheme(
       fillColor: ColorPallet.themeColor,
       filled: true,
+      contentPadding: EdgeInsets.only(left: 12),
+
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(32),
         borderSide: BorderSide.none,
@@ -32,7 +34,7 @@ class RailTicket extends StatelessWidget {
         borderRadius: BorderRadius.circular(32),
         borderSide: BorderSide(color: Colors.red),
       ),
-      hintStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+      hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
     ),
 
     textTheme: TextTheme(
@@ -65,6 +67,10 @@ class RailTicket extends StatelessWidget {
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       behavior: SnackBarBehavior.floating,
+    ),
+
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(foregroundColor: Colors.yellow),
     ),
   );
 }
