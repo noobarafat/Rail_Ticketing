@@ -3,16 +3,18 @@ import 'package:get/get.dart';
 import 'package:rail_ticketing/viewmodels/login_viewmodel.dart';
 
 class LoginField extends StatelessWidget {
-  LoginField({super.key});
+  LoginField({super.key, required this.controller});
 
-  final LoginViewmodel loginViewmodel = Get.put(LoginViewmodel());
+  final LoginViewmodel controller;
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoginViewmodel>(
-      builder: (controller) {
+      builder: (_) {
         return Form(
-          key: controller.loginFormKey,
+          key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

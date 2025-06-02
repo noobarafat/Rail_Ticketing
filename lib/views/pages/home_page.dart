@@ -2,6 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rail_ticketing/core/color_pallet.dart';
+import 'package:rail_ticketing/viewmodels/child_details_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/login_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/passenger_details_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/payment_method_viewmodel.dart';
 
 import 'package:rail_ticketing/views/pages/form_input_page.dart';
 import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
@@ -9,6 +14,12 @@ import 'package:rail_ticketing/views/widgets/gradient_container.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
+
+  final _loginViewModel = Get.put(LoginViewmodel());
+  final _journeyDetailsViewModel = Get.put(JourneyDetailsViewmodel());
+  final _passengerDetailsViewModel = Get.put(PassengerDetailsViewmodel());
+  final _childDetailsViewModel = Get.put(ChildDetailsViewmodel());
+  final _paymentDetailsViewModel = Get.put(PaymentMethodViewmodel());
 
   final TextEditingController _formNameController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -119,7 +130,15 @@ class HomePage extends StatelessWidget {
 
   void _onPressedSubmit() {
     if (_formKey.currentState!.validate()) {
-      Get.to(() => FormInputPage(formName: _formNameController.text.trim()));
+      Get.to(
+        () => FormInputPage(
+          formName: _formNameController.text.trim(),
+          loginViewModel: _loginViewModel,
+          childDetailsViewmodel: _childDetailsViewModel,
+          journeyDetailsViewmodel: _journeyDetailsViewModel,
+          passengerDetailsViewmodel: _passengerDetailsViewModel,
+        ),
+      );
     }
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:rail_ticketing/viewmodels/child_details_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/login_viewmodel.dart';
@@ -14,43 +13,20 @@ import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
 import 'package:rail_ticketing/views/widgets/text_field_box.dart';
 
 class WebsiteFormPage extends StatelessWidget {
-  WebsiteFormPage({super.key});
+  const WebsiteFormPage({
+    super.key,
+    required this.loginViewModel,
+    required this.journeyDetailsViewmodel,
+    required this.passengerDetailsViewmodel,
+    required this.childDetailsViewmodel,
+  });
 
-  final ChildDetailsViewmodel _childDetailsViewmodel = Get.put(
-    ChildDetailsViewmodel(),
-  );
-  final JourneyDetailsViewmodel _journeyDetailsViewmodel = Get.put(
-    JourneyDetailsViewmodel(),
-  );
-  final LoginViewmodel _loginViewmodel = Get.put(LoginViewmodel());
-  final PassengerDetailsViewmodel _passengerDetailsViewmodel = Get.put(
-    PassengerDetailsViewmodel(),
-  );
+  final LoginViewmodel loginViewModel;
+  final JourneyDetailsViewmodel journeyDetailsViewmodel;
+  final PassengerDetailsViewmodel passengerDetailsViewmodel;
+  final ChildDetailsViewmodel childDetailsViewmodel;
 
-  void submitForm(BuildContext context) {
-    bool validateChildDetails = _childDetailsViewmodel.validateChildDetails();
-    bool validatePassengerDetails =
-        _passengerDetailsViewmodel.validatePessengerDetails();
-    bool validateLoginDetails = _loginViewmodel.validateLoginField();
-    bool validateJourneyDetails =
-        _journeyDetailsViewmodel.validateJourneyDetails();
-
-    if (validateLoginDetails &&
-        validateJourneyDetails &&
-        validatePassengerDetails &&
-        validateChildDetails) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Successfull")));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(milliseconds: 500),
-          content: Text("Fill all the required information"),
-        ),
-      );
-    }
-  }
+  void submitForm(BuildContext context) {}
 
   @override
   Widget build(BuildContext context) {
@@ -68,18 +44,20 @@ class WebsiteFormPage extends StatelessWidget {
             children: [
               _sectionHeader(context, "IRCTC Login"),
               Padding(padding: EdgeInsets.only(top: 16)),
-              CustomTextFieldBox(child: LoginField()),
+              CustomTextFieldBox(child: LoginField(controller: loginViewModel)),
               Padding(padding: EdgeInsets.only(top: 16)),
               _sectionHeader(context, "Journey Details"),
               Padding(padding: EdgeInsets.only(top: 16)),
-              CustomTextFieldBox(child: JourneyDetails()),
+              CustomTextFieldBox(
+                child: JourneyDetails(controller: journeyDetailsViewmodel),
+              ),
               Padding(padding: EdgeInsets.only(top: 16)),
               _sectionHeader(context, "Passenger Details"),
-              PassengerDetails(),
+              PassengerDetails(controller: passengerDetailsViewmodel),
               Padding(padding: EdgeInsets.only(top: 16)),
               _sectionHeader(context, "Child Details"),
               Padding(padding: EdgeInsets.only(top: 16)),
-              ChildDetails(),
+              ChildDetails(controller: childDetailsViewmodel),
               Padding(padding: EdgeInsets.only(top: 16)),
               _sectionHeader(context, "Payment Method"),
               Padding(padding: EdgeInsets.only(top: 16)),

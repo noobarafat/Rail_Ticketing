@@ -9,31 +9,35 @@ import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
 import 'package:rail_ticketing/views/widgets/text_field_box.dart';
 
 class PassengerDetails extends StatelessWidget {
-  PassengerDetails({super.key});
-  final PassengerDetailsViewmodel passengerViewmodel = Get.put(
-    PassengerDetailsViewmodel(),
-  );
+  const PassengerDetails({super.key, required this.controller});
+
+  final PassengerDetailsViewmodel controller;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PassengerDetailsViewmodel>(
-      builder: (controller) {
+      builder: (_) {
         return Column(
           children: [
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: passengerViewmodel.passengers.length,
+              itemCount: controller.passengers.length,
               itemBuilder: (context, index) {
-                final passenger = passengerViewmodel.passengers[index];
+                final formKey = List.generate(
+                  controller.passengers.length,
+                  (_) => GlobalKey<FormState>(),
+                );
+                final passenger = controller.passengers[index];
+
                 return Form(
-                  key: controller.passengerFormKey[index],
+                  key: formKey[index],
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       IconButton(
                         onPressed: () {
-                          passengerViewmodel.removeUser(index);
+                          controller.removeUser(index);
                         },
                         icon: Icon(
                           Icons.clear,

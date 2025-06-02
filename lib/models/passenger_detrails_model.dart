@@ -4,10 +4,10 @@ class PassengerDetailsModel {
   TextEditingController passengerName;
   TextEditingController passengerAge;
 
-  String passengerGender = "Male";
-  String passengerBerthPref = "Berth Preference";
-  String passengerMeal = "Select Meal";
-  String passengerCountry = "India";
+  String passengerGender;
+  String passengerBerthPref;
+  String passengerMeal;
+  String passengerCountry;
 
   TextEditingController? passengerCardNumner;
   // String? passportOrTravelDoc;
@@ -16,7 +16,19 @@ class PassengerDetailsModel {
   // String? availConsession;
   // String? bedRoll;
 
-  PassengerDetailsModel()
-    : passengerName = TextEditingController(),
-      passengerAge = TextEditingController();
+  PassengerDetailsModel({
+    required this.passengerName,
+    required this.passengerAge,
+    this.passengerGender = "Male",
+    this.passengerBerthPref = "Berth Preference",
+    this.passengerMeal = "Select Meal",
+    this.passengerCountry = "India",
+  });
+
+  factory PassengerDetailsModel.newPassenger() {
+    return PassengerDetailsModel(
+      passengerName: TextEditingController(),
+      passengerAge: TextEditingController(),
+    );
+  }
 }

@@ -7,16 +7,14 @@ import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
 import 'package:rail_ticketing/views/widgets/text_field_box.dart';
 
 class ChildDetails extends StatelessWidget {
-  ChildDetails({super.key});
+  const ChildDetails({super.key, required this.controller});
 
-  final ChildDetailsViewmodel _childDetailsViewmodel = Get.put(
-    ChildDetailsViewmodel(),
-  );
+  final ChildDetailsViewmodel controller;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ChildDetailsViewmodel>(
-      builder: (controller) {
+      builder: (_) {
         return Column(
           children: [
             ListView.builder(
@@ -25,10 +23,14 @@ class ChildDetails extends StatelessWidget {
 
               itemCount: controller.childPessengers.length,
               itemBuilder: (context, index) {
+                final formKey = List.generate(
+                  controller.childPessengers.length,
+                  (_) => GlobalKey<FormState>(),
+                );
                 var childPassenger = controller.childPessengers[index];
 
                 return Form(
-                  key: controller.childFormKeys[index],
+                  key: formKey[index],
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -72,7 +74,7 @@ class ChildDetails extends StatelessWidget {
               buttonHeight: 40,
               buttonWidth: double.maxFinite,
               onPressed: () {
-                bool successful = _childDetailsViewmodel.addChildPassenger();
+                bool successful = controller.addChildPassenger();
                 if (!successful) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

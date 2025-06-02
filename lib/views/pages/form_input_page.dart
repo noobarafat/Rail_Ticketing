@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rail_ticketing/viewmodels/child_details_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/login_viewmodel.dart';
-import 'package:rail_ticketing/views/pages/rail_connect_form_page.dart';
+import 'package:rail_ticketing/viewmodels/passenger_details_viewmodel.dart';
 import 'package:rail_ticketing/views/pages/website_form_page.dart';
 
 class FormInputPage extends StatefulWidget {
-  const FormInputPage({super.key, required this.formName});
+  const FormInputPage({
+    super.key,
+    required this.formName,
+    required this.loginViewModel,
+    required this.journeyDetailsViewmodel,
+    required this.passengerDetailsViewmodel,
+    required this.childDetailsViewmodel,
+  });
 
   final String formName;
+  final LoginViewmodel loginViewModel;
+  final JourneyDetailsViewmodel journeyDetailsViewmodel;
+  final PassengerDetailsViewmodel passengerDetailsViewmodel;
+  final ChildDetailsViewmodel childDetailsViewmodel;
 
   @override
   State<FormInputPage> createState() => _FormInputPageState();
@@ -16,7 +29,6 @@ class FormInputPage extends StatefulWidget {
 class _FormInputPageState extends State<FormInputPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final _loginViewmodel = Get.put(LoginViewmodel());
 
   @override
   void initState() {
@@ -31,7 +43,20 @@ class _FormInputPageState extends State<FormInputPage>
 
       body: TabBarView(
         controller: _tabController,
-        children: [WebsiteFormPage(), RailConnectFormPage()],
+        children: [
+          WebsiteFormPage(
+            childDetailsViewmodel: widget.childDetailsViewmodel,
+            journeyDetailsViewmodel: widget.journeyDetailsViewmodel,
+            loginViewModel: widget.loginViewModel,
+            passengerDetailsViewmodel: widget.passengerDetailsViewmodel,
+          ),
+          WebsiteFormPage(
+            childDetailsViewmodel: widget.childDetailsViewmodel,
+            journeyDetailsViewmodel: widget.journeyDetailsViewmodel,
+            loginViewModel: widget.loginViewModel,
+            passengerDetailsViewmodel: widget.passengerDetailsViewmodel,
+          ),
+        ],
       ),
     );
   }
@@ -47,9 +72,9 @@ class _FormInputPageState extends State<FormInputPage>
         GetBuilder<LoginViewmodel>(
           builder: (_) {
             return IconButton(
-              onPressed: _loginViewmodel.toggleObsecure,
+              onPressed: widget.loginViewModel.toggleObsecure,
               icon: Icon(
-                _loginViewmodel.isObsecure
+                widget.loginViewModel.isObsecure
                     ? Icons.visibility_off
                     : Icons.visibility,
                 size: 32,

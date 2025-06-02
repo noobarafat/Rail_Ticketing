@@ -6,9 +6,8 @@ import 'package:rail_ticketing/viewmodels/payment_method_viewmodel.dart';
 class DebitCardField extends StatelessWidget {
   DebitCardField({super.key});
 
-  final PaymentMethodViewmodel _paymentMethodViewmodel = Get.put(
-    PaymentMethodViewmodel(),
-  );
+  final PaymentMethodViewmodel _paymentMethodViewmodel =
+      Get.find<PaymentMethodViewmodel>();
 
   @override
   Widget build(BuildContext context) {

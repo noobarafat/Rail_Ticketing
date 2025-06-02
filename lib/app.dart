@@ -24,8 +24,7 @@ class RailTicket extends StatelessWidget {
     inputDecorationTheme: InputDecorationTheme(
       fillColor: ColorPallet.themeColor,
       filled: true,
-      contentPadding: EdgeInsets.only(left: 12),
-
+      contentPadding: EdgeInsets.only(left: 12, right: 12),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(32),
         borderSide: BorderSide.none,
@@ -60,6 +59,9 @@ class RailTicket extends StatelessWidget {
     ),
 
     dropdownMenuTheme: DropdownMenuThemeData(
+      inputDecorationTheme: InputDecorationTheme(
+        suffixIconColor: ColorPallet.gradientColor2,
+      ),
       textStyle: TextStyle(fontSize: 12, color: Colors.red),
     ),
 

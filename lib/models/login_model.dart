@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 class LoginModel {
-  TextEditingController userName;
-  TextEditingController userPassword;
+  final TextEditingController userName;
+  final TextEditingController userPassword;
 
   LoginModel()
     : userName = TextEditingController(),
