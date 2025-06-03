@@ -63,7 +63,10 @@ class _WebsiteFormPageState extends State<WebsiteFormPage> {
       };
       try {
         var response = await FirebaseFirestore.instance
-            .collection("Forms")
+            .collection("WebsiteForm")
+            .add(formData);
+        var response2 = await FirebaseFirestore.instance
+            .collection("ReailConnectForm")
             .add(formData);
         if (response.id.isNotEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
