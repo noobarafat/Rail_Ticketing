@@ -16,4 +16,11 @@ class LoginViewmodel extends GetxController {
       'password': loginModel.userPassword.text,
     };
   }
+
+  bool isSubmitted = false;
+
+  void changeSumitStatus() {
+    isSubmitted = !isSubmitted;
+    update();
+  }
 }

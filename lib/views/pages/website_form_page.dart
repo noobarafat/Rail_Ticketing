@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:rail_ticketing/viewmodels/child_details_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/login_viewmodel.dart';
@@ -38,7 +41,7 @@ class _WebsiteFormPageState extends State<WebsiteFormPage> {
   final List<GlobalKey<FormState>> _passengersKeyList = [];
   final List<GlobalKey<FormState>> _childPassengersKeyList = [];
 
-  void submitForm(BuildContext context) {
+  Future<void> submitForm(BuildContext context) async {
     bool w = _loginKey.currentState?.validate() ?? false;
     bool x = _journeyDetailsKey.currentState?.validate() ?? false;
     bool y = _childPassengersKeyList.every(
@@ -49,18 +52,30 @@ class _WebsiteFormPageState extends State<WebsiteFormPage> {
     );
 
     if (w && x && y && z) {
+      widget.loginViewModel.changeSumitStatus();
       Map<String, dynamic> formData = {
-        'name': widget.formName,
+        'formName': widget.formName,
         'userCredential': widget.loginViewModel.getLoginData(),
         'journeyDetails': widget.journeyDetailsViewmodel.getJourneyData(),
         'passengerDetails':
             widget.passengerDetailsViewmodel.getPassengerDetails(),
         'childDetails': widget.childDetailsViewmodel.getChildData(),
       };
-      print(formData);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Successfull")));
+      try {
+        var response = await FirebaseFirestore.instance
+            .collection("Forms")
+            .add(formData);
+        if (response.id.isNotEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Successfull with id ${response.id}")),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Failed")));
+      }
+      widget.loginViewModel.changeSumitStatus();
     } else {
       ScaffoldMessenger.of(
         context,
@@ -192,11 +207,18 @@ class _WebsiteFormPageState extends State<WebsiteFormPage> {
               Padding(padding: EdgeInsets.only(top: 16)),
               CustomTextFieldBox(child: DebitCardField()),
               Padding(padding: EdgeInsets.only(top: 16)),
-              CustomGradientButton(
-                buttonName: "Book Now",
-                buttonHeight: 40,
-                buttonWidth: double.maxFinite,
-                onPressed: () => submitForm(context),
+              GetBuilder<LoginViewmodel>(
+                builder: (_) {
+                  return CustomGradientButton(
+                    buttonName:
+                        !widget.loginViewModel.isSubmitted
+                            ? "Book Now"
+                            : "...loading...",
+                    buttonHeight: 40,
+                    buttonWidth: double.maxFinite,
+                    onPressed: () => submitForm(context),
+                  );
+                },
               ),
             ],
           ),
