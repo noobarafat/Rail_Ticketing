@@ -54,6 +54,24 @@ class PassengerDetails extends StatelessWidget {
                           children: [
                             _buildNameAgeRow(passenger),
                             const SizedBox(height: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 12,
+                                bottom: 6,
+                              ),
+                              child: Text("Phone Number"),
+                            ),
+                            TextFormField(
+                              controller: passenger.phoneNumber,
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "Phone Number required";
+                                } else {
+                                  null;
+                                }
+                              },
+                            ),
+                            const SizedBox(height: 10),
                             _buildBerthAndGender(controller, passenger),
                             const SizedBox(height: 10),
                             _buildBerthPreference(controller, passenger),

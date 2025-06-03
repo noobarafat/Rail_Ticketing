@@ -54,6 +54,7 @@ class PassengerDetailsViewmodel extends GetxController {
           (passenger) => {
             'name': passenger.passengerName.text.trim(),
             'age': passenger.passengerAge.text.trim(),
+            'phoneNumber': passenger.phoneNumber.text.trim(),
             'optBerth': "",
             'gender': passenger.passengerGender,
             'berthPref': passenger.passengerBerthPref,

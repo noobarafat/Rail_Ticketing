@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class PassengerDetailsModel {
   TextEditingController passengerName;
   TextEditingController passengerAge;
+  TextEditingController phoneNumber;
 
   String passengerGender;
   String passengerBerthPref;
@@ -19,6 +20,7 @@ class PassengerDetailsModel {
   PassengerDetailsModel({
     required this.passengerName,
     required this.passengerAge,
+    required this.phoneNumber,
     this.passengerGender = "Male",
     this.passengerBerthPref = "Berth Preference",
     this.passengerMeal = "Select Meal",
@@ -29,6 +31,7 @@ class PassengerDetailsModel {
     return PassengerDetailsModel(
       passengerName: TextEditingController(),
       passengerAge: TextEditingController(),
+      phoneNumber: TextEditingController(),
     );
   }
 }
