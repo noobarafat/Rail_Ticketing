@@ -14,25 +14,23 @@ class CustomRadioCheckBoxes extends StatelessWidget {
       builder: (_) {
         return Column(
           children: List.generate(controller.bookingOptions.length, (index) {
-            return Transform.scale(
-              scale: 1,
-              child: RadioListTile(
-                activeColor: ColorPallet.gradientColor1,
-                dense: true,
-                contentPadding: EdgeInsets.all(0),
-                title: Text(
-                  controller.bookingOptions[index],
-                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
+            return RadioListTile(
+              activeColor: ColorPallet.gradientColor1,
+              dense: true,
+              contentPadding: EdgeInsets.zero,
+              visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+              title: Text(
+                controller.bookingOptions[index],
+                style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
                 ),
-                value: index,
-                groupValue: controller.selectedIndexChekcBox,
-                onChanged: (index) {
-                  controller.chooseIndex(index);
-                },
               ),
+              value: index,
+              groupValue: controller.selectedIndexChekcBox,
+              onChanged: (index) {
+                controller.chooseIndex(index);
+              },
             );
           }),
         );

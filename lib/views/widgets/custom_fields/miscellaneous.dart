@@ -17,6 +17,7 @@ class Miscellaneous extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CheckboxListTile.adaptive(
+              visualDensity: VisualDensity(vertical: -4),
               dense: true,
               controlAffinity: ListTileControlAffinity.leading,
               contentPadding: EdgeInsets.all(0),
@@ -30,6 +31,7 @@ class Miscellaneous extends StatelessWidget {
               ),
             ),
             CheckboxListTile.adaptive(
+              visualDensity: VisualDensity(vertical: -4),
               controlAffinity: ListTileControlAffinity.leading,
               contentPadding: EdgeInsets.all(0),
               dense: true,
@@ -44,29 +46,43 @@ class Miscellaneous extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Padding(
-              padding: const EdgeInsets.only(left: 12, bottom: 4),
-              child: Text(
-                "Travel Insurence",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.only(left: 10, bottom: 4),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      "Travel Insurence",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  ...List.generate(
+                    2,
+                    (index) => Expanded(
+                      flex: 1,
+                      child: RadioListTile(
+                        visualDensity: VisualDensity(vertical: -4),
+                        dense: true,
+                        contentPadding: EdgeInsets.all(0),
+                        value: index,
+                        groupValue: controller.yesNoIndex,
+                        onChanged: (index) {
+                          controller.chooseYesNoIndex(index);
+                        },
+                        title: index == 0 ? Text("Yes") : Text("No"),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(width: 10),
-            ...List.generate(
-              2,
-              (index) => RadioListTile(
-                dense: true,
-                contentPadding: EdgeInsets.all(0),
-                value: index,
-                groupValue: controller.yesNoIndex,
-                onChanged: (index) {
-                  controller.chooseYesNoIndex(index);
-                },
-                title: index == 0 ? Text("Yes") : Text("No"),
-              ),
-            ),
-            const SizedBox(height: 16),
+            const SizedBox(width: 16),
+
             Padding(
-              padding: const EdgeInsets.only(left: 12, bottom: 4),
+              padding: const EdgeInsets.only(left: 10, bottom: 4),
               child: Text(
                 "Booking Options",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -83,13 +99,35 @@ class Miscellaneous extends StatelessWidget {
                 controller.toggleIsCoacPrferred();
               },
               title: Text(
-                "Consider Auto upgradation",
-                style: TextStyle(fontSize: 15),
+                "Coach Preferred",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Coach Id",
+                      enabled: controller.isCoachPreferred,
+                      fillColor:
+                          !controller.isCoachPreferred
+                              ? Colors.grey.shade800
+                              : null,
+                    ),
+                  ),
+                ),
+                Expanded(child: Text("")),
+              ],
             ),
             const SizedBox(height: 16),
             _buildTitle("Mobile No"),
-            TextFormField(),
+            Row(
+              children: [
+                Expanded(child: TextFormField()),
+                Expanded(child: Text("")),
+              ],
+            ),
             const SizedBox(height: 8),
             _buildTitle("Payment"),
             DropdownButtonFormField<String>(
@@ -109,6 +147,20 @@ class Miscellaneous extends StatelessWidget {
                   controller.update();
                 }
               },
+            ),
+            const SizedBox(height: 10),
+            CheckboxListTile.adaptive(
+              dense: true,
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.all(0),
+              value: controller.isAutoFilCapcha,
+              onChanged: (val) {
+                controller.toggleAutoFillCap();
+              },
+              title: Text(
+                "Autofill Captchas",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         );
