@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "884287479378",
+    "project_id": "train-ticket-d08b1",
+    "storage_bucket": "train-ticket-d08b1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884287479378:android:1908d4ea22951994b2098b",
+        "android_client_info": {
+          "package_name": "com.example.rail_ticketing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbepNtGuX_Ji_KG0HioTCRoI1JLhYs_PQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -45,12 +45,14 @@ class _FormInputPageState extends State<FormInputPage>
         controller: _tabController,
         children: [
           WebsiteFormPage(
+            formName: widget.formName,
             childDetailsViewmodel: widget.childDetailsViewmodel,
             journeyDetailsViewmodel: widget.journeyDetailsViewmodel,
             loginViewModel: widget.loginViewModel,
             passengerDetailsViewmodel: widget.passengerDetailsViewmodel,
           ),
           WebsiteFormPage(
+            formName: widget.formName,
             childDetailsViewmodel: widget.childDetailsViewmodel,
             journeyDetailsViewmodel: widget.journeyDetailsViewmodel,
             loginViewModel: widget.loginViewModel,

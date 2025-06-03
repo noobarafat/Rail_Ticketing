@@ -7,9 +7,18 @@ import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
 import 'package:rail_ticketing/views/widgets/text_field_box.dart';
 
 class ChildDetails extends StatelessWidget {
-  const ChildDetails({super.key, required this.controller});
+  const ChildDetails({
+    super.key,
+    required this.controller,
+    required this.formKey,
+    required this.onAddChild,
+    required this.onRemoveChild,
+  });
 
   final ChildDetailsViewmodel controller;
+  final List<GlobalKey<FormState>> formKey;
+  final VoidCallback onAddChild;
+  final void Function(int) onRemoveChild;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +32,6 @@ class ChildDetails extends StatelessWidget {
 
               itemCount: controller.childPessengers.length,
               itemBuilder: (context, index) {
-                final formKey = List.generate(
-                  controller.childPessengers.length,
-                  (_) => GlobalKey<FormState>(),
-                );
                 var childPassenger = controller.childPessengers[index];
 
                 return Form(
@@ -35,9 +40,7 @@ class ChildDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       IconButton(
-                        onPressed: () {
-                          controller.removeChildPassenger(index);
-                        },
+                        onPressed: () => onRemoveChild(index),
                         icon: Icon(
                           Icons.clear,
                           color: ColorPallet.gradientColor2,
@@ -73,20 +76,7 @@ class ChildDetails extends StatelessWidget {
               buttonName: "+",
               buttonHeight: 40,
               buttonWidth: double.maxFinite,
-              onPressed: () {
-                bool successful = controller.addChildPassenger();
-                if (!successful) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      duration: Duration(milliseconds: 800),
-                      margin: EdgeInsets.symmetric(horizontal: 40),
-                      content: Center(
-                        child: Text("Maximum 2 children are allowed"),
-                      ),
-                    ),
-                  );
-                }
-              },
+              onPressed: onAddChild,
             ),
           ],
         );

@@ -3,11 +3,15 @@ import 'package:get/get.dart';
 import 'package:rail_ticketing/viewmodels/login_viewmodel.dart';
 
 class LoginField extends StatelessWidget {
-  LoginField({super.key, required this.controller});
+  const LoginField({
+    super.key,
+    required this.controller,
+    required this.formKey,
+  });
 
   final LoginViewmodel controller;
 
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {

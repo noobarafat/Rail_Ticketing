@@ -80,4 +80,20 @@ class JourneyDetailsViewmodel extends GetxController {
     }
     update();
   }
+
+  Map<String, dynamic> getJourneyData() {
+    return {
+      'from': journeyDetails.journeyFrom.text.trim(),
+      'to': journeyDetails.journeyTo.text.trim(),
+      'date': dateController.text,
+      'class': journeyDetails.journeyClass,
+      'quota': journeyDetails.journeyQuota,
+      'trainNo': journeyDetails.trainNo,
+      'boardingStation':
+          journeyDetails.boradingStation != null
+              ? journeyDetails.boradingStation!.text
+              : "",
+      'choosedMehod': journeyDetails.selectedAvialibility
+    };
+  }
 }

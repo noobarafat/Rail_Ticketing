@@ -17,7 +17,7 @@ class PassengerDetailsViewmodel extends GetxController {
     return true;
   }
 
-  void removeUser(int index) {
+  void removePassenger(int index) {
     if (passengers.isNotEmpty) {
       passengers.removeAt(index);
     }
@@ -47,4 +47,27 @@ class PassengerDetailsViewmodel extends GetxController {
     "NON VEG (DIABETIC)",
     "NO FOOD",
   ];
+
+  List<Map<String, dynamic>> getPassengerDetails() {
+    return passengers
+        .map(
+          (passenger) => {
+            'name': passenger.passengerName.text.trim(),
+            'age': passenger.passengerAge.text.trim(),
+            'optBerth': "",
+            'gender': passenger.passengerGender,
+            'berthPref': passenger.passengerBerthPref,
+            'meal': passenger.passengerMeal,
+            'avliCon': "",
+            'bedRoll': "",
+            'country': passenger.passengerCountry,
+            'passOrTravelDoc': "",
+            'cardNo':
+                passenger.passengerCardNumner != null
+                    ? passenger.passengerCardNumner!.text
+                    : "",
+          },
+        )
+        .toList();
+  }
 }

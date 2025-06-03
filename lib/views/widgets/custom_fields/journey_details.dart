@@ -5,11 +5,15 @@ import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
 import 'package:rail_ticketing/views/widgets/custom_checkbox.dart';
 
 class JourneyDetails extends StatelessWidget {
-  JourneyDetails({super.key, required this.controller});
+  const JourneyDetails({
+    super.key,
+    required this.controller,
+    required this.formKey,
+  });
 
   final JourneyDetailsViewmodel controller;
 
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {

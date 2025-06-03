@@ -9,4 +9,11 @@ class LoginViewmodel extends GetxController {
     isObsecure = !isObsecure;
     update();
   }
+
+  Map<String, dynamic> getLoginData() {
+    return {
+      'userName': loginModel.userName.text.trim(),
+      'password': loginModel.userPassword.text,
+    };
+  }
 }

@@ -9,9 +9,18 @@ import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
 import 'package:rail_ticketing/views/widgets/text_field_box.dart';
 
 class PassengerDetails extends StatelessWidget {
-  const PassengerDetails({super.key, required this.controller});
+  const PassengerDetails({
+    super.key,
+    required this.controller,
+    required this.formKey,
+    required this.onAddPassenger,
+    required this.onRemovePassenger,
+  });
 
   final PassengerDetailsViewmodel controller;
+  final List<GlobalKey<FormState>> formKey;
+  final VoidCallback onAddPassenger;
+  final void Function(int) onRemovePassenger;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +33,6 @@ class PassengerDetails extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               itemCount: controller.passengers.length,
               itemBuilder: (context, index) {
-                final formKey = List.generate(
-                  controller.passengers.length,
-                  (_) => GlobalKey<FormState>(),
-                );
                 final passenger = controller.passengers[index];
 
                 return Form(
@@ -36,9 +41,7 @@ class PassengerDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       IconButton(
-                        onPressed: () {
-                          controller.removeUser(index);
-                        },
+                        onPressed: () => onRemovePassenger(index),
                         icon: Icon(
                           Icons.clear,
                           color: ColorPallet.gradientColor2,
@@ -77,18 +80,7 @@ class PassengerDetails extends StatelessWidget {
               buttonName: "+",
               buttonHeight: 40,
               buttonWidth: double.maxFinite,
-              onPressed: () {
-                bool isSuccessful = controller.addPassenger();
-                if (!isSuccessful) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      duration: const Duration(milliseconds: 800),
-                      margin: EdgeInsets.symmetric(horizontal: 40),
-                      content: Text("Maximum 6 passenger allowed"),
-                    ),
-                  );
-                }
-              },
+              onPressed: onAddPassenger,
             ),
           ],
         );
@@ -137,6 +129,8 @@ class PassengerDetails extends StatelessWidget {
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return "Age required";
+                  } else if (int.tryParse(value) == null) {
+                    return "Enter correct age";
                   } else {
                     return null;
                   }

@@ -28,4 +28,16 @@ class ChildDetailsViewmodel extends GetxController {
     "Four year",
   ];
   List<String> avalilableGenders = ["Male", "Female", "Transgender"];
+
+  List<Map<String, dynamic>> getChildData() {
+    return childPessengers
+        .map(
+          (child) => {
+            'name': child.childNameController.text.trim(),
+            'age': child.childAge,
+            'gender': child.childGender,
+          },
+        )
+        .toList();
+  }
 }
