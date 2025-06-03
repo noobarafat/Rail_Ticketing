@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rail_ticketing/core/color_pallet.dart';
 import 'package:rail_ticketing/viewmodels/child_details_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/gst_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/login_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/miscellaneous_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/passenger_details_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/payment_method_viewmodel.dart';
 
@@ -19,6 +21,8 @@ class HomePage extends StatelessWidget {
   final _journeyDetailsViewModel = Get.put(JourneyDetailsViewmodel());
   final _passengerDetailsViewModel = Get.put(PassengerDetailsViewmodel());
   final _childDetailsViewModel = Get.put(ChildDetailsViewmodel());
+  final _gstViewModel = Get.put(GstViewmodel());
+  final _miscellinous = Get.put(MiscellaneousViewmodel());
   final _paymentDetailsViewModel = Get.put(PaymentMethodViewmodel());
 
   final TextEditingController _formNameController = TextEditingController();
@@ -137,6 +141,7 @@ class HomePage extends StatelessWidget {
           childDetailsViewmodel: _childDetailsViewModel,
           journeyDetailsViewmodel: _journeyDetailsViewModel,
           passengerDetailsViewmodel: _passengerDetailsViewModel,
+          miscellaneousViewmodel: _miscellinous,
         ),
       );
     }

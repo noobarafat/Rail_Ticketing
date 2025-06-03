@@ -5,11 +5,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rail_ticketing/viewmodels/child_details_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/login_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/miscellaneous_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/passenger_details_viewmodel.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/child_details.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/debit_card_field.dart';
+import 'package:rail_ticketing/views/widgets/custom_fields/gst_details.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/journey_details.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/login_field.dart';
+import 'package:rail_ticketing/views/widgets/custom_fields/miscellaneous.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/passenger_details.dart';
 import 'package:rail_ticketing/views/widgets/custom_fields/payment_field.dart';
 import 'package:rail_ticketing/views/widgets/custom_gradient_button.dart';
@@ -23,6 +26,7 @@ class WebsiteFormPage extends StatefulWidget {
     required this.journeyDetailsViewmodel,
     required this.passengerDetailsViewmodel,
     required this.childDetailsViewmodel,
+    required this.miscellaneousViewmodel,
   });
 
   final String formName;
@@ -30,6 +34,7 @@ class WebsiteFormPage extends StatefulWidget {
   final JourneyDetailsViewmodel journeyDetailsViewmodel;
   final PassengerDetailsViewmodel passengerDetailsViewmodel;
   final ChildDetailsViewmodel childDetailsViewmodel;
+  final MiscellaneousViewmodel miscellaneousViewmodel;
 
   @override
   State<WebsiteFormPage> createState() => _WebsiteFormPageState();
@@ -194,12 +199,21 @@ class _WebsiteFormPageState extends State<WebsiteFormPage> {
               ),
               Padding(padding: EdgeInsets.only(top: 16)),
               _sectionHeader(context, "Child Details"),
-              Padding(padding: EdgeInsets.only(top: 16)),
               ChildDetails(
                 controller: widget.childDetailsViewmodel,
                 formKey: _childPassengersKeyList,
                 onAddChild: _addChild,
                 onRemoveChild: _removeChild,
+              ),
+              Padding(padding: EdgeInsets.only(top: 16)),
+              _sectionHeader(context, "Gst Details (Optional)"),
+              Padding(padding: EdgeInsets.only(top: 16)),
+              CustomTextFieldBox(child: GstDetails()),
+              Padding(padding: EdgeInsets.only(top: 16)),
+              _sectionHeader(context, "Miscellaneaous"),
+              Padding(padding: EdgeInsets.only(top: 16)),
+              CustomTextFieldBox(
+                child: Miscellaneous(controller: widget.miscellaneousViewmodel),
               ),
               Padding(padding: EdgeInsets.only(top: 16)),
               _sectionHeader(context, "Payment Method"),

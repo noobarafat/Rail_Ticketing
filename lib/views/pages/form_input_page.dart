@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:rail_ticketing/viewmodels/child_details_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/login_viewmodel.dart';
+import 'package:rail_ticketing/viewmodels/miscellaneous_viewmodel.dart';
 import 'package:rail_ticketing/viewmodels/passenger_details_viewmodel.dart';
 import 'package:rail_ticketing/views/pages/website_form_page.dart';
 
@@ -14,6 +15,7 @@ class FormInputPage extends StatefulWidget {
     required this.journeyDetailsViewmodel,
     required this.passengerDetailsViewmodel,
     required this.childDetailsViewmodel,
+    required this.miscellaneousViewmodel,
   });
 
   final String formName;
@@ -21,6 +23,7 @@ class FormInputPage extends StatefulWidget {
   final JourneyDetailsViewmodel journeyDetailsViewmodel;
   final PassengerDetailsViewmodel passengerDetailsViewmodel;
   final ChildDetailsViewmodel childDetailsViewmodel;
+  final MiscellaneousViewmodel miscellaneousViewmodel;
 
   @override
   State<FormInputPage> createState() => _FormInputPageState();
@@ -50,6 +53,7 @@ class _FormInputPageState extends State<FormInputPage>
             journeyDetailsViewmodel: widget.journeyDetailsViewmodel,
             loginViewModel: widget.loginViewModel,
             passengerDetailsViewmodel: widget.passengerDetailsViewmodel,
+            miscellaneousViewmodel: widget.miscellaneousViewmodel,
           ),
           WebsiteFormPage(
             formName: widget.formName,
@@ -57,6 +61,7 @@ class _FormInputPageState extends State<FormInputPage>
             journeyDetailsViewmodel: widget.journeyDetailsViewmodel,
             loginViewModel: widget.loginViewModel,
             passengerDetailsViewmodel: widget.passengerDetailsViewmodel,
+            miscellaneousViewmodel: widget.miscellaneousViewmodel,
           ),
         ],
       ),

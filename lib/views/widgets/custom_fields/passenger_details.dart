@@ -172,7 +172,7 @@ class PassengerDetails extends StatelessWidget {
           child: TextFormField(
             decoration: InputDecoration(
               enabled: false,
-              fillColor: ColorPallet.gradientColor1.withAlpha(36),
+              fillColor: Colors.grey.shade800,
               hintText: "Opt Berth",
             ),
           ),
@@ -261,7 +261,7 @@ class PassengerDetails extends StatelessWidget {
           child: TextFormField(
             decoration: InputDecoration(
               enabled: false,
-              fillColor: ColorPallet.gradientColor1.withAlpha(36),
+              fillColor: Colors.grey.shade800,
               hintText: "Avail Concession",
               suffixIcon: Icon(Icons.arrow_drop_down),
             ),
@@ -273,7 +273,7 @@ class PassengerDetails extends StatelessWidget {
           child: TextFormField(
             decoration: InputDecoration(
               enabled: false,
-              //fillColor: ColorPallet.gradientColor1.withAlpha(36),
+              fillColor: Colors.grey.shade800,
               hintText: "Bed Roll",
               suffixIcon: Icon(Icons.square),
             ),

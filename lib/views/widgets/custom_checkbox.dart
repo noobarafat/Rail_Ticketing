@@ -6,9 +6,8 @@ import 'package:rail_ticketing/viewmodels/journey_details_viewmodel.dart';
 class CustomCheckBox extends StatelessWidget {
   CustomCheckBox({super.key});
 
-  final JourneyDetailsViewmodel _detailsViewmodel = Get.put(
-    JourneyDetailsViewmodel(),
-  );
+  final JourneyDetailsViewmodel _detailsViewmodel =
+      Get.find<JourneyDetailsViewmodel>();
 
   @override
   Widget build(BuildContext context) {
